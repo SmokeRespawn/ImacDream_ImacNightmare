@@ -77,7 +77,6 @@ foreach(TMP_PATH ${EXEC_FILES})
   target_link_libraries(${EXEC} 
     ${OPENGL_LIBRARIES} 
     ${GLFW_LIBRARIES}
-    glad
     glfw
     GLEW::GLEW
     ${ASSIMP_LIBRARIES} 

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <glad/glad.h>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <map>
@@ -9,12 +8,6 @@
 
 int main(void)
 {
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))   
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }    
-
     GLFWwindow* window;
 
     /* Initialize the library */
@@ -22,7 +15,7 @@ int main(void)
         return -1;
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(600, 600, "Alo et Clo lpbs", NULL, NULL);
+    window = glfwCreateWindow(640, 480, "Alo et Clo lpbs", NULL, NULL);
     if (!window)
     {
         glfwTerminate();

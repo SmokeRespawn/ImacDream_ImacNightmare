@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(IMACDream LANGUAGES C CXX)
-add_definitions(-std=c++11)
+#add_definitions(-lGL -lGLU -lglfw3 -lX11 -lXxf86vm -lXrandr -lpthread -lXi)
 
 # We need a CMAKE_DIR with some code to find external dependencies
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
-
+#GLFW
+find_package(glfw3 3.3 REQUIRED)
 # OpenGL
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
@@ -60,7 +61,7 @@ ${CMAKE_SOURCE_DIR}/src/impl/*.hpp)
 # Define the executable
 
 file(GLOB EXEC_FILES "${CMAKE_SOURCE_DIR}/src/execs/*.cpp")
-add_subdirectory(glimac)
+
 
 foreach(TMP_PATH ${EXEC_FILES})
   get_filename_component(EXEC ${TMP_PATH} NAME_WLE)
@@ -75,10 +76,14 @@ foreach(TMP_PATH ${EXEC_FILES})
   )
   target_link_libraries(${EXEC} 
     ${OPENGL_LIBRARIES} 
+    ${GLFW_LIBRARIES}
+    glfw
     GLEW::GLEW
-    glimac
     ${ASSIMP_LIBRARIES} 
     ${SDL2_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_MIXER_LIBRARIES})
 endforeach()
+
+#sudo apt-get install xorg-dev
+#sudo apt-get install wget

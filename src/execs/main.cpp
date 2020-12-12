@@ -2,6 +2,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <map>
+#include "dependencies/include/mesh.hpp"
+//#include <glm/glm.hpp> Peut être nécessaire pour les structures glm (glm::vec3 par exemple)
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 800
@@ -15,7 +17,7 @@ int main(void)
         return -1;
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Alo et Clo lpbs", NULL, NULL);
+    window = glfwCreateWindow(800, 800, "Insérer un nom de projet cool", NULL, NULL);
     if (!window)
     {
         glfwTerminate();

@@ -1,5 +1,5 @@
-#ifndef MODEL_H
-#define MODEL_H
+#ifndef MODELORIGINAL_HPP
+#define MODELORIGINAL_HPP
 #include <GL/glew.h>
 
 #include <glm/glm.hpp>

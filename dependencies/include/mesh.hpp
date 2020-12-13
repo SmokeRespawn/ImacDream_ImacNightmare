@@ -10,12 +10,15 @@
 struct Vertex { //On définit une structure qui contient les informations de nos vertexs
     glm::vec3 position;
     glm::vec3 normal;
-    glm::vec3 texCoords;
+    glm::vec2 texCoords;
+    glm::vec3 Tangent;
+    glm::vec3 Bitangent;
 };
 
 struct Texture { //On définit une structure qui contient nos informations de texture
     unsigned int id;
-    std::string Type; //Texture "Diffuse" ou "Spéculaire" (Diffuse or Specular)
+    std::string type; //Texture "Diffuse" ou "Spéculaire" (Diffuse or Specular)
+    std::string path;
 };
 
 class Mesh {
@@ -33,15 +36,15 @@ class Mesh {
             setupMesh();
         }
 
-        void Draw(Shader &shader)void Draw(Shader &shader) {
+        void Draw(Shader &shader) {
             unsigned int diffuseNr = 1;
             unsigned int specularNr = 1;
             for(unsigned int i = 0; i < textures.size(); i++)
             {
                 glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding
                 // retrieve texture number (the N in diffuse_textureN)
-                string number;
-                string name = textures[i].type;
+                std::string number;
+                std::string name = textures[i].type;
                 if(name == "texture_diffuse")
                     number = std::to_string(diffuseNr++);
                 else if(name == "texture_specular")
@@ -53,7 +56,7 @@ class Mesh {
             glActiveTexture(GL_TEXTURE0);
 
             // draw mesh
-            glBindVertexArray(VAO);
+            glBindVertexArray(vao);
             glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
             glBindVertexArray(0);
         }  

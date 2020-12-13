@@ -2,7 +2,15 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <map>
+
+/*#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>*/ //Peut être utile pour la suite
+
+#include "dependencies/include/shader.hpp"
 #include "dependencies/include/mesh.hpp"
+#include "dependencies/include/model.hpp"
+
 //#include <glm/glm.hpp> Peut être nécessaire pour les structures glm (glm::vec3 par exemple)
 
 #define WINDOW_WIDTH 800

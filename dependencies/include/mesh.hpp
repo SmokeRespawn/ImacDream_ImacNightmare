@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 #include <string>
 #include <vector>
-#include "dependencies/include/shader.hpp"
+#include "shader.hpp"
 
 struct Vertex { //On définit une structure qui contient les informations de nos vertexs
     glm::vec3 position;

@@ -55,12 +55,17 @@ file(GLOB_RECURSE SRC_FILES
 file(GLOB_RECURSE HEADER_FILES 
 ${CMAKE_SOURCE_DIR}/src/libs/*.h
 ${CMAKE_SOURCE_DIR}/src/libs/*.hpp
-${CMAKE_SOURCE_DIR}/src/impl/*.h
-${CMAKE_SOURCE_DIR}/src/impl/*.hpp)
+${CMAKE_SOURCE_DIR}/dependencies/include/*.h
+${CMAKE_SOURCE_DIR}/dependencies/include/*.hpp
+${CMAKE_SOURCE_DIR}/dependencies/*.h
+${CMAKE_SOURCE_DIR}/dependencies/*.hpp)
 
+
+add_subdirectory(glimac)
 # Define the executable
 
 file(GLOB EXEC_FILES "${CMAKE_SOURCE_DIR}/src/execs/*.cpp")
+
 
 
 foreach(TMP_PATH ${EXEC_FILES})
@@ -74,9 +79,13 @@ foreach(TMP_PATH ${EXEC_FILES})
   target_include_directories(${EXEC}
     PUBLIC "${CMAKE_SOURCE_DIR}/src/"
   )
+  target_include_directories(${EXEC}
+    PUBLIC "${CMAKE_SOURCE_DIR}/dependencies/include"
+  )
   target_link_libraries(${EXEC} 
     ${OPENGL_LIBRARIES} 
     ${GLFW_LIBRARIES}
+    glimac
     glfw
     GLEW::GLEW
     ${ASSIMP_LIBRARIES} 

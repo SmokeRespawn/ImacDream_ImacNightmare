@@ -4,13 +4,13 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "dependencies/include/stb/stb_image.h"
+#include "stb/stb_image.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "dependencies/include/mesh.hpp"
-#include "dependencies/include/shader.hpp"
+#include "mesh.hpp"
+#include "shader.hpp"
 
 #include <string>
 #include <fstream>

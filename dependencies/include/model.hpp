@@ -1,9 +1,9 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
-#include "dependencies/include/shader.hpp"
-#include "dependencies/include/mesh.hpp"
-#include "dependencies/include/stb/stb_image.h"
+#include "shader.hpp"
+#include "mesh.hpp"
+#include "stb/stb_image.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>

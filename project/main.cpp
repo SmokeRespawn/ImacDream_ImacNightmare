@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
      // Model cube(cubePath);
 
      //gobelet Nils
-     std::string gobeletPath = "/home/paulr/Documents/Erwann/OpenGL/GLImac-Template/assets/models/gob.obj";
+     std::string gobeletPath = "/home/paulr/ProjetOPENGL/Projet/project/assets/models/gob.obj";
      std::cout<<"error avant chemin"<<std::endl;
      Model gobelet(gobeletPath);
      std::cout<<"error après chemin"<<std::endl;
@@ -90,7 +90,6 @@ int main(int argc, char** argv) {
 
               camera.rotateLeft(-2*mousePosX);
               camera.rotateUp(-2*mousePosY);
-              std::cout<<"hola"<<std::endl;
               }
         }
 
@@ -107,17 +106,17 @@ int main(int argc, char** argv) {
   	      GL_FALSE,
   	      glm::value_ptr(ProjMatrix * MVMatrix));
 
-          glUniformMatrix4fv(
-            locationMVMatrix,
-    	      1,
-    	      GL_FALSE,
-    	      glm::value_ptr(MVMatrix));
+        glUniformMatrix4fv(
+          locationMVMatrix,
+          1,
+          GL_FALSE,
+          glm::value_ptr(MVMatrix));
 
-            glUniformMatrix4fv(
-              locationNormal,
-      	      1,
-      	      GL_FALSE,
-      	      glm::value_ptr(NormalMatrix));
+        glUniformMatrix4fv(
+          locationNormal,
+          1,
+          GL_FALSE,
+          glm::value_ptr(NormalMatrix));
 
         gobelet.DrawModel(program);
 

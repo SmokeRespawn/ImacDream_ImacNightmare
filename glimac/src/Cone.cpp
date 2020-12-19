@@ -2,8 +2,8 @@
 #include <vector>
 #include <iostream>
 #define GLM_ENABLE_EXPERIMENTAL
-#include "glimac/common.hpp"
-#include "glimac/Cone.hpp"
+#include "common.hpp"
+#include "Cone.hpp"
 
 namespace glimac {
 

@@ -5,8 +5,14 @@ project(IMACDream LANGUAGES C CXX)
 
 # We need a CMAKE_DIR with some code to find external dependencies
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+
 #GLFW
 find_package(glfw3 3.3 REQUIRED)
+
+#SDL
+find_package(SDL REQUIRED)
+message(STATUS "Found SDL in " ${SDL_LIBRARY})
+
 # OpenGL
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
@@ -40,7 +46,7 @@ message(STATUS "Found SDL2_mixer in " ${SDL2_mixer})
 
 # Link libraries
 link_directories(${CMAKE_SOURCE_DIR}/lib)
-set(LIBS assimp SDL2 SDL2_image SDL2_mixer)
+set(LIBS assimp SDL SDL2 SDL2_image SDL2_mixer)
 
 # Build Main Project
 
@@ -55,6 +61,8 @@ file(GLOB_RECURSE SRC_FILES
 file(GLOB_RECURSE HEADER_FILES 
 ${CMAKE_SOURCE_DIR}/src/libs/*.h
 ${CMAKE_SOURCE_DIR}/src/libs/*.hpp
+${CMAKE_SOURCE_DIR}/glimac/include/*.h
+${CMAKE_SOURCE_DIR}/glimac/include/*.hpp
 ${CMAKE_SOURCE_DIR}/dependencies/include/*.h
 ${CMAKE_SOURCE_DIR}/dependencies/include/*.hpp
 ${CMAKE_SOURCE_DIR}/dependencies/*.h
@@ -64,6 +72,8 @@ ${CMAKE_SOURCE_DIR}/dependencies/*.hpp)
 add_subdirectory(glimac)
 # Define the executable
 
+include_directories(${SDL_INCLUDE_DIR})
+set(ALL_LIBRARIES glimac ${SDL_LIBRARY} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY} ${ASSIMP_LIBRARIES})
 file(GLOB EXEC_FILES "${CMAKE_SOURCE_DIR}/src/execs/*.cpp")
 
 
@@ -82,9 +92,14 @@ foreach(TMP_PATH ${EXEC_FILES})
   target_include_directories(${EXEC}
     PUBLIC "${CMAKE_SOURCE_DIR}/dependencies/include"
   )
+  target_include_directories(${EXEC}
+    PUBLIC "${CMAKE_SOURCE_DIR}/glimac/include"
+  )
   target_link_libraries(${EXEC} 
     ${OPENGL_LIBRARIES} 
     ${GLFW_LIBRARIES}
+    ${SDL_LIBRARY}
+    SDL
     glimac
     glfw
     GLEW::GLEW

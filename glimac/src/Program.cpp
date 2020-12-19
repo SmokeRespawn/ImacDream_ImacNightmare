@@ -1,5 +1,5 @@
 #define GLM_ENABLE_EXPERIMENTAL
-#include "glimac/Program.hpp"
+#include "Program.hpp"
 #include <stdexcept>
 namespace glimac {
 

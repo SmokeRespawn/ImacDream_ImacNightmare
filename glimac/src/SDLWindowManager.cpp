@@ -1,5 +1,4 @@
-#define GLM_ENABLE_EXPERIMENTAL
-#include "glimac/SDLWindowManager.hpp"
+#include "SDLWindowManager.hpp"
 #include <iostream>
 
 namespace glimac {

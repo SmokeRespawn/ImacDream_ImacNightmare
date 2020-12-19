@@ -1,12 +1,12 @@
 #define GLM_ENABLE_EXPERIMENTAL
 
-#include "glimac/Shader.hpp"
+#include "Shader.hpp"
 
 #include <fstream>
 #include <stdexcept>
 #include <string>
 #include <sstream>
-#define GLM_ENABLE_EXPERIMENTAL
+
 namespace glimac {
 
 bool Shader::compile() {

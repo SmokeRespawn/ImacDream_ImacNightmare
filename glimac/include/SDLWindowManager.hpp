@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <SDL/SDL.h>
+#define GLM_ENABLE_EXPERIMENTAL
 #include "glm.hpp"
 
 namespace glimac {

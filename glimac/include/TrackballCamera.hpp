@@ -15,6 +15,7 @@ class TrackballCamera
       m_fAngleX = 0.f;
       m_fAngleY = 0.f;
     };
+    
 
   void moveFront(float delta);
   void rotateLeft(float degrees);

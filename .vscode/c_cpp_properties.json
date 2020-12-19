@@ -4,8 +4,6 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/dependencies/include/**",
-                "${workspaceFolder}/dependencies/include/stb/**",
                 "${workspaceFolder}/glimac/include/**",
                 "${workspaceFolder}/glimac/**",
                 "/usr/include/**"

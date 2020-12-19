@@ -1,6 +1,4 @@
-#define GLM_ENABLE_EXPERIMENTAL
-
-#include "Shader.hpp"
+#include "glimac/Shader.hpp"
 
 #include <fstream>
 #include <stdexcept>

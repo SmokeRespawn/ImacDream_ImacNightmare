@@ -1,9 +1,8 @@
 #include <cmath>
 #include <vector>
 #include <iostream>
-#define GLM_ENABLE_EXPERIMENTAL
-#include "common.hpp"
-#include "Cone.hpp"
+#include "glimac/common.hpp"
+#include "glimac/Cone.hpp"
 
 namespace glimac {
 

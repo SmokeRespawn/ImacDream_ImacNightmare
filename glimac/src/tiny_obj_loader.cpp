@@ -29,7 +29,7 @@
 #include <sstream>
 
 #include "tiny_obj_loader.h"
-#define GLM_ENABLE_EXPERIMENTAL
+
 namespace tinyobj {
 
 struct vertex_index {

@@ -1,9 +1,8 @@
-#define GLM_ENABLE_EXPERIMENTAL
 #include <cmath>
 #include <vector>
 #include <iostream>
-#include "common.hpp"
-#include "Sphere.hpp"
+#include "glimac/common.hpp"
+#include "glimac/Sphere.hpp"
 
 namespace glimac {
 

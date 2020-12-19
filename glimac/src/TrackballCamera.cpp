@@ -1,4 +1,4 @@
-#include "TrackballCamera.hpp"
+#include "glimac/TrackballCamera.hpp"
 
 void TrackballCamera::moveFront(float delta){
     m_fDistance += delta;

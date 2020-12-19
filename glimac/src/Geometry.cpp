@@ -1,8 +1,8 @@
-#define GLM_ENABLE_EXPERIMENTAL
-#include "Geometry.hpp"
+#include "glimac/Geometry.hpp"
 #include "tiny_obj_loader.h"
 #include <iostream>
 #include <algorithm>
+
 namespace glimac {
 
 void Geometry::generateNormals(unsigned int meshIndex) {

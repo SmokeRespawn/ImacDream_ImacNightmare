@@ -1,4 +1,4 @@
-#include "Mesh.hpp"
+#include "glimac/Mesh.hpp"
 
 using namespace std;
 

@@ -1,6 +1,6 @@
-#define GLM_ENABLE_EXPERIMENTAL
-#include "Program.hpp"
+#include "glimac/Program.hpp"
 #include <stdexcept>
+
 namespace glimac {
 
 bool Program::link() {

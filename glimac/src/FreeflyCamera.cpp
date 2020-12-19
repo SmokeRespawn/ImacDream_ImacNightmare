@@ -1,4 +1,4 @@
-#include "FreeflyCamera.hpp"
+#include "glimac/FreeflyCamera.hpp"
 
 void FreeflyCamera::moveLeft(float t){
   m_Position += t*m_LeftVector;

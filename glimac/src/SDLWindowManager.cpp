@@ -1,4 +1,4 @@
-#include "SDLWindowManager.hpp"
+#include "glimac/SDLWindowManager.hpp"
 #include <iostream>
 
 namespace glimac {

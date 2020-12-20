@@ -60,7 +60,6 @@ int main(int argc, char** argv) {
      // std::string cubePath = "assets/models/cube.obj";
      // Model cube(cubePath);
 
-     //gobelet Nils
      std::string modelPath = "/home/paulr/ProjetOPENGL/Projet/project/assets/models/LowPolyTrees/LowPolyTrees.obj";
      std::cout<<"error avant chemin"<<std::endl;
      Model model(modelPath);

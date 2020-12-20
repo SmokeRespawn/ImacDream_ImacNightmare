@@ -41,6 +41,7 @@ int main(int argc, char** argv) {
     GLint locationNormal = glGetUniformLocation(idProg, "uNormalMatrix");
 
     glEnable(GL_DEPTH_TEST);
+    //glDepthFunc(GL_ALWAYS);
 
     glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f), 800.f/600.f, 0.1f, 100.f);
     glm::mat4 MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, -5));
@@ -60,9 +61,9 @@ int main(int argc, char** argv) {
      // Model cube(cubePath);
 
      //gobelet Nils
-     std::string gobeletPath = "/home/paulr/ProjetOPENGL/Projet/project/assets/models/gob.obj";
+     std::string modelPath = "/home/paulr/ProjetOPENGL/Projet/project/assets/models/LowPolyTrees/LowPolyTrees.obj";
      std::cout<<"error avant chemin"<<std::endl;
-     Model gobelet(gobeletPath);
+     Model model(modelPath);
      std::cout<<"error après chemin"<<std::endl;
 
      //création de la caméra
@@ -97,6 +98,7 @@ int main(int argc, char** argv) {
 
         ProjMatrix =  glm::perspective(glm::radians(70.f), 800.f/600.f, 0.1f, 100.f);
         MVMatrix = ViewMatrix * glm::translate(glm::mat4(1), glm::vec3(0, 0, -5));
+        MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2f,0.2f,0.2f));
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -118,7 +120,7 @@ int main(int argc, char** argv) {
           GL_FALSE,
           glm::value_ptr(NormalMatrix));
 
-        gobelet.DrawModel(program);
+        model.DrawModel(program);
 
         // Update the display
         windowManager.swapBuffers();

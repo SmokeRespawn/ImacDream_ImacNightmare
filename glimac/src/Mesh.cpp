@@ -24,23 +24,23 @@ void Mesh::setupMesh(){
   }
 
 void Mesh::Draw(glimac::Program &shader){
-    // unsigned int diffuseNr = 1;
-    // unsigned int specularNr = 1;
-    //   for(unsigned int i = 0; i < textures.size(); i++)
-    //   {
-    //     glActiveTexture(GL_TEXTURE0 + i); // Activation de l’unité de texture adéquate avant liaison
-    //     // récupère le numéro de la texture (le N dans diffuse_textureN)
-    //     std::string number;
-    //     std::string name = textures[i].type;
-    //     if(name == "texture_diffuse")
-    //         number = std::to_string(diffuseNr++);
-    //     else if(name == "texture_specular")
-    //         number = std::to_string(specularNr++);
-    //       glUniform1f(glGetUniformLocation(shader.getGLId(), ("material." + name + number).c_str()), i);
-    //       glBindTexture(GL_TEXTURE_2D, textures[i].id);
-    //   }
-    // glActiveTexture(GL_TEXTURE0);
-    // affiche le mesh
+    unsigned int diffuseNr = 1;
+    unsigned int specularNr = 1;
+      for(unsigned int i = 0; i < textures.size(); i++)
+      {
+        glActiveTexture(GL_TEXTURE0 + i); // Activation de l’unité de texture adéquate avant liaison
+        // récupère le numéro de la texture (le N dans diffuse_textureN)
+        std::string number;
+        std::string name = textures[i].type;
+        if(name == "texture_diffuse")
+            number = std::to_string(diffuseNr++);
+        else if(name == "texture_specular")
+            number = std::to_string(specularNr++);
+          glUniform1f(glGetUniformLocation(shader.getGLId(), ("material." + name + number).c_str()), i);
+          glBindTexture(GL_TEXTURE_2D, textures[i].id);
+      }
+    glActiveTexture(GL_TEXTURE0);
+    //affiche le mesh
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

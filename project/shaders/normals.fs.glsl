@@ -8,7 +8,11 @@ in vec2 vTexCoords; // Coordonnées de texture du sommet
 
 out vec3 fFragColor;
 
+uniform sampler2D texture_diffuse1;
+
+
 void main() {
   fFragColor = normalize(vNormal_vs);
   //fFragColor = vec3(0.,1.,0.);
+  //fFragColor = texture(texture_diffuse1, vTexCoords);
 }

@@ -119,12 +119,12 @@ int main(int argc, char** argv) {
 
               camera.rotateLeft(-2*mousePosX);
               camera.rotateUp(-2*mousePosY);*/
-              /*if (firstMouse)
+              if (firstMouse)
               {
                   lastX = mousePos.x;
                   lastY = mousePos.y;
                   firstMouse = false;
-              }*/
+              }
 
               float xoffset = mousePos.x - lastX;
               float yoffset = lastY - mousePos.y; // reversed since y-coordinates go from bottom to top

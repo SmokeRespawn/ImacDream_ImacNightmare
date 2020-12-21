@@ -11,10 +11,24 @@
 #include <glimac/glm.hpp>
 #include <glimac/Model.hpp>
 #include <glimac/actualPath.hpp>
+#include <glimac/camera.hpp>
 //#include <glimac/modelLoading.hpp>
 
 using namespace glimac;
 
+// settings
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
+
+// camera
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+float lastX = SCR_WIDTH / 2.0f;
+float lastY = SCR_HEIGHT / 2.0f;
+bool firstMouse = true;
+
+// timing
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
 
 
 int main(int argc, char** argv) {
@@ -68,42 +82,61 @@ int main(int argc, char** argv) {
     
 
     //On charge les modèles avec ASSIMP
-    // Model LowPolyTrees(LowPolyTreesPath);
+    //Model LowPolyTrees(LowPolyTreesPath);
     Model monkey(monkeyPath);
     // Model simpleBox(simpleBoxPath);
     // Model gob(gobPath);
 
      //création de la caméra
-     FreeflyCamera camera;
+     //FreeflyCamera camera;
+     Camera camera;
     bool drawQ = false;
+    glm::ivec2 mousePosition = windowManager.getMousePosition();//Get actual mouse position
     // Application loop:
     bool done = false;
     while(!done) {
-      
+        float currentFrame = windowManager.getTime();
+
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
         // Event loop:
         SDL_Event e;
         while(windowManager.pollEvent(e)) {
             if(e.type == SDL_QUIT) {
                 done = true; // Leave the loop after this iteration
             }
-            if(windowManager.isKeyPressed(SDLK_z))camera.moveFront(0.1);
-            if(windowManager.isKeyPressed(SDLK_s))camera.moveFront(-0.1);
-            if(windowManager.isKeyPressed(SDLK_q))camera.moveLeft(0.1);
-            if(windowManager.isKeyPressed(SDLK_d))camera.moveLeft(-0.1);
+            if(windowManager.isKeyPressed(SDLK_z))camera.ProcessKeyboard(FORWARD, deltaTime);
+            if(windowManager.isKeyPressed(SDLK_s))camera.ProcessKeyboard(BACKWARD, deltaTime);
+            if(windowManager.isKeyPressed(SDLK_q))camera.ProcessKeyboard(LEFT, deltaTime);
+            if(windowManager.isKeyPressed(SDLK_d))camera.ProcessKeyboard(RIGHT, deltaTime);
             if(windowManager.isKeyPressed(SDLK_SPACE))drawQ = true;
 
             if(windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)){
               //Ici on récupère les positions de la souris
               glm::vec2 mousePos = windowManager.getMousePosition();
-              float mousePosX = mousePos.x/800.0f - 0.5;
+              /*float mousePosX = mousePos.x/800.0f - 0.5;
               float mousePosY = mousePos.y/600.0f - 0.5;
 
               camera.rotateLeft(-2*mousePosX);
-              camera.rotateUp(-2*mousePosY);
-              }
+              camera.rotateUp(-2*mousePosY);*/
+              /*if (firstMouse)
+              {
+                  lastX = mousePos.x;
+                  lastY = mousePos.y;
+                  firstMouse = false;
+              }*/
+
+              float xoffset = mousePos.x - lastX;
+              float yoffset = lastY - mousePos.y; // reversed since y-coordinates go from bottom to top
+
+              lastX = mousePos.x;
+              lastY = mousePos.y;
+
+              camera.ProcessMouseMovement(xoffset, yoffset);
+                        }
         }
 
-        glm::mat4 ViewMatrix = camera.getViewMatrix();
+        glm::mat4 ViewMatrix = camera.GetViewMatrix();
 
         ProjMatrix =  glm::perspective(glm::radians(70.f), 800.f/600.f, 0.1f, 100.f);
         MVMatrix = ViewMatrix * glm::translate(glm::mat4(1), glm::vec3(0, 0, -5));
@@ -129,7 +162,7 @@ int main(int argc, char** argv) {
           GL_FALSE,
           glm::value_ptr(NormalMatrix));
 
-        //monkey.DrawModel(program);
+        monkey.DrawModel(program);
         //LowPolyTrees.DrawModel(program);
         //simpleBox.DrawModel(program);
         

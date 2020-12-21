@@ -10,6 +10,8 @@
 
 #include <glimac/glm.hpp>
 #include <glimac/Model.hpp>
+#include <glimac/actualPath.hpp>
+//#include <glimac/modelLoading.hpp>
 
 using namespace glimac;
 
@@ -55,22 +57,29 @@ int main(int argc, char** argv) {
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
 
-     //définition du cube
-     //bon chemin à garder
-     // std::string cubePath = "assets/models/cube.obj";
-     // Model cube(cubePath);
+    //On charge le chemin actuel 
+    std::string fullpath = actualPath(argv[0]);
+    
+    //On donne les chemins de chaque .obj nécessaires
+    std::string LowPolyTreesPath = fullpath + "assets/models/LowPolyTrees/LowPolyTrees.obj";
+    std::string monkeyPath = fullpath +  "assets/models/monkey.obj";
+    std::string simpleBoxPath = fullpath + "assets/models/simpleBox.obj";
+    std::string gobPath = fullpath + "assets/models/gob.obj";
+    
 
-     std::string modelPath = "/home/paulr/ProjetOPENGL/Projet/project/assets/models/LowPolyTrees/LowPolyTrees.obj";
-     std::cout<<"error avant chemin"<<std::endl;
-     Model model(modelPath);
-     std::cout<<"error après chemin"<<std::endl;
+    //On charge les modèles avec ASSIMP
+    // Model LowPolyTrees(LowPolyTreesPath);
+    Model monkey(monkeyPath);
+    // Model simpleBox(simpleBoxPath);
+    // Model gob(gobPath);
 
      //création de la caméra
      FreeflyCamera camera;
-
+    bool drawQ = false;
     // Application loop:
     bool done = false;
     while(!done) {
+      
         // Event loop:
         SDL_Event e;
         while(windowManager.pollEvent(e)) {
@@ -81,6 +90,7 @@ int main(int argc, char** argv) {
             if(windowManager.isKeyPressed(SDLK_s))camera.moveFront(-0.1);
             if(windowManager.isKeyPressed(SDLK_q))camera.moveLeft(0.1);
             if(windowManager.isKeyPressed(SDLK_d))camera.moveLeft(-0.1);
+            if(windowManager.isKeyPressed(SDLK_SPACE))drawQ = true;
 
             if(windowManager.isMouseButtonPressed(SDL_BUTTON_RIGHT)){
               //Ici on récupère les positions de la souris
@@ -119,7 +129,11 @@ int main(int argc, char** argv) {
           GL_FALSE,
           glm::value_ptr(NormalMatrix));
 
-        model.DrawModel(program);
+        //monkey.DrawModel(program);
+        //LowPolyTrees.DrawModel(program);
+        //simpleBox.DrawModel(program);
+        
+        //if (drawQ)monkey.DrawModel(program);
 
         // Update the display
         windowManager.swapBuffers();

@@ -113,14 +113,15 @@ int main(int argc, char** argv) {
     
     //On donne les chemins de chaque .obj nécessaires
     std::string LowPolyTreesPath = fullpath + "assets/models/LowPolyTrees/LowPolyTrees.obj";
-    std::string monkeyPath = fullpath +  "assets/models/monkey.obj";
+    //std::string monkeyPath = fullpath +  "assets/models/monkey.obj";
     std::string simpleBoxPath = fullpath + "assets/models/simpleBox.obj";
     std::string gobPath = fullpath + "assets/models/gob.obj";
+    std::string cubePath = fullpath + "assets/models/cubetexture.obj";
     
 
     //On charge les modèles avec ASSIMP
     //Model LowPolyTrees(LowPolyTreesPath);
-    Model monkey(monkeyPath);
+    Model cube(cubePath);
     // Model simpleBox(simpleBoxPath);
     // Model gob(gobPath);
 
@@ -166,7 +167,7 @@ int main(int argc, char** argv) {
           GL_FALSE,
           glm::value_ptr(NormalMatrix));
 
-        monkey.DrawModel(program);
+        cube.DrawModel(program);
         //LowPolyTrees.DrawModel(program);
         //simpleBox.DrawModel(program);
         

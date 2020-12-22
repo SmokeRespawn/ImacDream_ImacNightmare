@@ -28,7 +28,7 @@ void processInput(GLFWwindow *window);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_HEIGHT = 800;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
     glfwSetScrollCallback(window, scroll_callback);
 
     // tell GLFW to capture our mouse
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //Changer NORMAL en disabled pour avoir une souris invisible, mais caméra fonctionne mieux en NORMAL
 
     // Initialize SDL and open a window
     //SDLWindowManager windowManager(800, 600, "GLImac");
@@ -140,8 +140,8 @@ int main(int argc, char** argv) {
         processInput(window);
 
         glm::mat4 ViewMatrix = camera.GetViewMatrix();
-
-        ProjMatrix =  glm::perspective(glm::radians(70.f), 800.f/600.f, 0.1f, 100.f);
+        glm::mat4 ProjMatrix = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        //ProjMatrix =  glm::perspective(glm::radians(70.f), 800.f/600.f, 0.1f, 100.f);
         MVMatrix = ViewMatrix * glm::translate(glm::mat4(1), glm::vec3(0, 0, -5));
         MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2f,0.2f,0.2f));
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));

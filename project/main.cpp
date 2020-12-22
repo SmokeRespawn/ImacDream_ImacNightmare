@@ -27,8 +27,8 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 800;
+const unsigned int SCR_WIDTH = 1080;
+const unsigned int SCR_HEIGHT = 720;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -64,12 +64,11 @@ int main(int argc, char** argv) {
     }
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(window, mouse_callback);
+    //glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //Changer NORMAL en disabled pour avoir une souris invisible, mais caméra fonctionne mieux en NORMAL
-
     // Initialize SDL and open a window
     //SDLWindowManager windowManager(800, 600, "GLImac");
 
@@ -137,6 +136,8 @@ int main(int argc, char** argv) {
 
         // input
         // -----
+        if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+            glfwSetCursorPosCallback(window, mouse_callback);//On place la souris au centre de l'écran et on appuie sur P
         processInput(window);
 
         glm::mat4 ViewMatrix = camera.GetViewMatrix();

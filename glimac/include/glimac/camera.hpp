@@ -12,7 +12,9 @@ enum Camera_Movement {
     FORWARD,
     BACKWARD,
     LEFT,
-    RIGHT
+    RIGHT/*,
+    UP,
+    DOWN*/
 };
 
 // Default camera values
@@ -33,6 +35,7 @@ public:
     glm::vec3 Up;
     glm::vec3 Right;
     glm::vec3 WorldUp;
+
     // euler Angles
     float Yaw;
     float Pitch;
@@ -78,7 +81,45 @@ public:
             Position -= Right * velocity;
         if (direction == RIGHT)
             Position += Right * velocity;
+    
     }
+    // se déplacer vers le haut et vers le bas
+    /*  
+    void moveUp(Camera_Movement direction, float deltaTime)
+    {
+        if (direction == UP)
+            Position += Up * velocity;
+        if (direction == DOWN)
+            Position -= Up * velocity;
+    }
+    
+    */
+
+   // accélération de la caméra
+   /*
+    const float Camera::ACCELERATION{700.f} //modifier valeur
+
+   void ActualiserEtat(SDL_Event const&  e){
+       if(e.state == SDL_PRESSED && e.key.code == GLFW_KEY_UP) //verifier si la touche o est préssée GLFW_KEY_o
+    {
+        accelerationEnCours == true; //voir attribut
+    }
+    else if (e.type ==SDL_RELEASED && et.key.code == LFW_KEY_UP)//quand on relache la touche 
+    {
+        accelerationEnCours == false;
+    }
+   }
+
+   void mettreAJour(float temps){ //mettre a jour position de la cam
+    if (accelerationEnCours)// si camera accelere alors vitesse augmente
+    {
+        vitesse += 700.f*temps; // on peut changer la valeur // ou ACCELERATION*tempsssss
+    }
+    camera.move(vitesse*temps, 0);//memoriser la vitesse et déplacer
+}
+   */
+
+
 
     // processes input received from a mouse input system. Expects the offset value in both the x and y direction.
     void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true)
@@ -113,6 +154,12 @@ public:
     }
 
 private:
+
+    /*
+    float vitesse{};
+    bool accelerationEnCours{};
+    static const float ACCELERATION;
+    */
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors()
     {

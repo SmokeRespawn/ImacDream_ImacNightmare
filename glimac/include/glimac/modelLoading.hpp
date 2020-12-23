@@ -11,36 +11,34 @@
 
 #include <glimac/glm.hpp>
 #include <glimac/Model.hpp>
-
-/*
-
-Model loadModels(std::string userPath);
+#include <map>
 
 class LoadModel
 {
-private:
-    std::string LowPolyTreesPath = userPath + "assets/models/LowPolyTrees/LowPolyTrees.obj";
-    std::string monkeyPath = userPath + "assets/models/monkey.obj";
-    std::string simpleBoxPath = userPath + "assets/models/simpleBox.obj";
-    std::string gobPath = userPath + "assets/models/gob.obj";
+public:
+    std::string LowPolyTreesPath = "assets/models/LowPolyTrees/LowPolyTrees.obj"; // 0
+    std::string monkeyPath = "assets/models/monkey.obj";                          // 1
+    std::string simpleBoxPath = "assets/models/simpleBox.obj";                    // 2
+    std::vector<Model> models;
 public:
     LoadModel();
+    LoadModel(std::string fullpath);
     ~LoadModel();
-    
-    void monkey(){
-        monkey.DrawModel(program);
-    }
 };
 
-LoadModel::LoadModel()
+LoadModel::LoadModel(std::string fullpath)
 {
+    this->LowPolyTreesPath = fullpath + this->LowPolyTreesPath;
+    this->monkeyPath = fullpath + this->monkeyPath;
+    this->simpleBoxPath = fullpath + this->simpleBoxPath;
     Model LowPolyTrees(LowPolyTreesPath);
     Model monkey(monkeyPath);
     Model simpleBox(simpleBoxPath);
-    Model gob(gobPath);
+    this->models.push_back(LowPolyTrees);
+    this->models.push_back(monkey);
+    this->models.push_back(simpleBox);
 }
 
 LoadModel::~LoadModel()
 {
 }
-*/

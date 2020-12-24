@@ -25,13 +25,14 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
+void printVec3(glm::vec3 vec);
 
 // settings
 const unsigned int SCR_WIDTH = 1080;
 const unsigned int SCR_HEIGHT = 720;
 
 // camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(-2.3f, 10.f, 28.f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -137,7 +138,7 @@ int main(int argc, char** argv) {
         glm::mat4 ProjMatrix = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         //ProjMatrix =  glm::perspective(glm::radians(70.f), 800.f/600.f, 0.1f, 100.f);
         MVMatrix = ViewMatrix * glm::translate(glm::mat4(1), glm::vec3(0, 0, -5));
-        MVMatrix = glm::scale(MVMatrix, glm::vec3(0.2f,0.2f,0.2f));
+        MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5f,0.5f,0.5f));
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -159,6 +160,7 @@ int main(int argc, char** argv) {
           GL_FALSE,
           glm::value_ptr(NormalMatrix));
         LoadModel.models[0].DrawModel(program);
+        printVec3(camera.Position);
         //LoadModel.drawModelLoaded(LoadModel.models["LowPolyTrees"]);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -188,6 +190,8 @@ void processInput(GLFWwindow *window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
+        camera.Position = glm::vec3(-2.3f, 10.f, 28.f);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -224,4 +228,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     camera.ProcessMouseScroll(yoffset);
+}
+
+void printVec3(glm::vec3 vec){
+    std::cout << "x : " << vec.x << " | y : " << vec.y << " | z : " << vec.z << std::endl;
 }

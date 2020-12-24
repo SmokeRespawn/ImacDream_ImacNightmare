@@ -190,8 +190,12 @@ void processInput(GLFWwindow *window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
-        camera.Position = glm::vec3(-2.3f, 10.f, 28.f);
+    if (glm::distance(camera.Position,glm::vec3(-2.3f, 10.f, 28.f)) < 1.0){
+        std::cout << "A distance d'activer" << std::endl;
+        if (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
+            camera.Position = glm::vec3(-2.3f, 10.f, 28.f);
+    }
+    
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

@@ -1,7 +1,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glimac/SDLWindowManager.hpp>
+#include <time.h>
 
+#include <SDL/SDL_mixer.h>
 
 #include <iostream>
 
@@ -41,7 +43,7 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-
+long t = time(0);
 int main(int argc, char** argv) {
   // glfw: initialize and configure
     // ------------------------------
@@ -53,6 +55,9 @@ int main(int argc, char** argv) {
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
+
+
+
 
     // glfw window creation
     // --------------------
@@ -114,7 +119,18 @@ int main(int argc, char** argv) {
     
     //On donne les chemins de chaque .obj nécessaires
     LoadModel LoadModel(fullpath);
+
+    //initialisation de SDL_Mixer, attention == ça renvoie 0 si c bon et -1 si y'a une erreur, d'où le Mix_GetError
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) {
+        std::cout << Mix_GetError() << std::endl;
+    }
+    Mix_Music *musique;
     
+    std::string chemin = fullpath+"/assets/musiques/7rings-ariana.mp3";
+    //const char *music1 = fullpath.c_str() + "/assets/musiques/music1.mp3".c_str();
+    musique = Mix_LoadMUS(chemin.c_str());
+    Mix_PlayMusic(musique, -1); //Joue infiniment la musique
+
 
     //On charge les modèles avec ASSIMP
 
@@ -160,7 +176,11 @@ int main(int argc, char** argv) {
           GL_FALSE,
           glm::value_ptr(NormalMatrix));
         LoadModel.models[0].DrawModel(program);
-        printVec3(camera.Position);
+        
+        if (t >= 1){
+            t = time(0);
+            printVec3(camera.Position);
+        }
         //LoadModel.drawModelLoaded(LoadModel.models["LowPolyTrees"]);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -168,6 +188,14 @@ int main(int argc, char** argv) {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+
+    //on libère la musique
+    Mix_FreeMusic(musique);
+    //on ferme SDL_mixer
+    Mix_CloseAudio();
+
+
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
     glfwTerminate();
@@ -181,7 +209,6 @@ void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -190,8 +217,13 @@ void processInput(GLFWwindow *window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
-        camera.Position = glm::vec3(-2.3f, 10.f, 28.f);
+    if (glm::distance(camera.Position,glm::vec3(-2.3f, 10.f, 28.f)) < 1.0){
+        std::cout << "A distance d'activer" << std::endl;
+        std::cout << Mix_GetError() << std::endl;
+        if (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
+            camera.Position = glm::vec3(-2.3f, 10.f, 28.f);
+    }
+    
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

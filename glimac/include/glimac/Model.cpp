@@ -51,8 +51,8 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
         vPos.y = mesh->mVertices[i].y;
         vPos.z = mesh->mVertices[i].z;
         vertex.Position = vPos;
-        std::cout<<"Position : "<<std::endl;
-        std::cout<<vertex.Position<<std::endl;
+        //std::cout<<"Position : "<<std::endl;
+        //std::cout<<vertex.Position<<std::endl;
 
         //traitement des normales et coordonnées de textures des sommets
         if(mesh->HasNormals())
@@ -62,8 +62,8 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
           vNormal.y = mesh->mNormals[i].y;
           vNormal.z = mesh->mNormals[i].z;
           vertex.Normal = vNormal;
-          std::cout<<"Normal : "<<std::endl;
-          std::cout<<vertex.Normal<<std::endl;
+          //std::cout<<"Normal : "<<std::endl;
+          //std::cout<<vertex.Normal<<std::endl;
         }
 
         //traitement des coordonnées de textures des sommets
@@ -73,8 +73,8 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
           tex.x = mesh->mTextureCoords[0][i].x;
           tex.y = mesh->mTextureCoords[0][i].y;
           vertex.TexCoords = tex;
-          std::cout<<"tex : "<<std::endl;
-          std::cout<<vertex.TexCoords<<std::endl;
+          //std::cout<<"tex : "<<std::endl;
+          //std::cout<<vertex.TexCoords<<std::endl;
         }
         else
         {

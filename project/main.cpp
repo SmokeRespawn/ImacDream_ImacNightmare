@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glimac/SDLWindowManager.hpp>
+#include <time.h>
 
 #include <SDL/SDL_mixer.h>
 
@@ -42,7 +43,7 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-
+long t = time(0);
 int main(int argc, char** argv) {
   // glfw: initialize and configure
     // ------------------------------
@@ -175,7 +176,11 @@ int main(int argc, char** argv) {
           GL_FALSE,
           glm::value_ptr(NormalMatrix));
         LoadModel.models[0].DrawModel(program);
-        printVec3(camera.Position);
+        
+        if (t >= 1){
+            t = time(0);
+            printVec3(camera.Position);
+        }
         //LoadModel.drawModelLoaded(LoadModel.models["LowPolyTrees"]);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -204,7 +209,6 @@ void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)

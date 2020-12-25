@@ -11,7 +11,7 @@ void Model::DrawModel(glimac::Program &shader)
 void Model::loadModel(std::string path)
 {
     Assimp::Importer import;
-    const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs); //aiProcess_OptimizeMeshes or aiProcess_Triangulate 22.64s
        if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         cout << "ERROR::ASSIMP::" << import.GetErrorString() << endl;
@@ -51,8 +51,6 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
         vPos.y = mesh->mVertices[i].y;
         vPos.z = mesh->mVertices[i].z;
         vertex.Position = vPos;
-        //std::cout<<"Position : "<<std::endl;
-        //std::cout<<vertex.Position<<std::endl;
 
         //traitement des normales et coordonnées de textures des sommets
         if(mesh->HasNormals())
@@ -62,8 +60,6 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
           vNormal.y = mesh->mNormals[i].y;
           vNormal.z = mesh->mNormals[i].z;
           vertex.Normal = vNormal;
-          //std::cout<<"Normal : "<<std::endl;
-          //std::cout<<vertex.Normal<<std::endl;
         }
 
         //traitement des coordonnées de textures des sommets
@@ -73,8 +69,6 @@ Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
           tex.x = mesh->mTextureCoords[0][i].x;
           tex.y = mesh->mTextureCoords[0][i].y;
           vertex.TexCoords = tex;
-          //std::cout<<"tex : "<<std::endl;
-          //std::cout<<vertex.TexCoords<<std::endl;
         }
         else
         {

@@ -43,8 +43,6 @@ float lastFrame = 0.0f;
 
 int main(int argc, char** argv) {
 
-  //auto chrono = SDL_GetTicks{}; // ou auto chrono = sf::Clock{};
-
   // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -181,7 +179,6 @@ int main(int argc, char** argv) {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    // camera.mettreAJour(chrono.restart().asSecondes());// mettre a jour position à chaque tour de boucle
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
@@ -208,11 +205,12 @@ void processInput(GLFWwindow *window)
 /*  if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
             camera.moveUP(UP, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_CTRL) == GLFW_PRESS)
-        camera.moveUp(DOWN, deltaTime);
-// acceleration camera ? ou : camera.actualiserEtat(e);
-    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
-        camera.ActualiserEtat(ACCELERATION, deltaTime);
-        
+        camera.MoveUp(DOWN, deltaTime);
+// acceleration camera 
+    if (glfwGetKey(window, GLFW_KEY_SHIFT) == GLFW_PRESS)
+        camera.Accelerer(SPEEDUP, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_CTRL+SHIFT) == GLFW_PRESS)
+        camera.Accelerer(SLOWDOWN, deltaTime);    
     */
 }
 

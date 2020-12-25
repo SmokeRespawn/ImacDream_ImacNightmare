@@ -14,7 +14,9 @@ enum Camera_Movement {
     LEFT,
     RIGHT/*,
     UP,
-    DOWN*/
+    DOWN, 
+    SPEEDUP, 
+    SLOWDOWN*/
 };
 
 // Default camera values
@@ -85,9 +87,9 @@ public:
     }
     // se déplacer vers le haut et vers le bas
     /*  
-    void moveUp(Camera_Movement direction, float deltaTime)
+    void MoveUp(Camera_Movement direction, float deltaTime) 
     {
-        if (direction == UP)
+        if (vitesse == UP)
             Position += Up * velocity;
         if (direction == DOWN)
             Position -= Up * velocity;
@@ -97,26 +99,14 @@ public:
 
    // accélération de la caméra
    /*
-    const float Camera::ACCELERATION{700.f} //modifier valeur
+    void Accelerer(Camera_Movement vitesse, float deltaTime) //vitesse ou direction
+    {
+        if (vitesse == SPEEDUP)
+            SPEED *= 2;
+        if (direction == SLOWDOWN)
+            SPEED /= 2;
+    }
 
-   void ActualiserEtat(SDL_Event const&  e){
-       if(e.state == SDL_PRESSED && e.key.code == GLFW_KEY_UP) //verifier si la touche o est préssée GLFW_KEY_o
-    {
-        accelerationEnCours == true; //voir attribut
-    }
-    else if (e.type ==SDL_RELEASED && et.key.code == LFW_KEY_UP)//quand on relache la touche 
-    {
-        accelerationEnCours == false;
-    }
-   }
-
-   void mettreAJour(float temps){ //mettre a jour position de la cam
-    if (accelerationEnCours)// si camera accelere alors vitesse augmente
-    {
-        vitesse += 700.f*temps; // on peut changer la valeur // ou ACCELERATION*tempsssss
-    }
-    camera.move(vitesse*temps, 0);//memoriser la vitesse et déplacer
-}
    */
 
 

@@ -6,7 +6,8 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/glimac/include/**",
                 "${workspaceFolder}/glimac/**",
-                "/usr/include/**"
+                "/usr/include/**",
+                "/usr/include/SDL2"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

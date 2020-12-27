@@ -277,4 +277,5 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 void printVec3(glm::vec3 vec){
     std::cout << "x : " << vec.x << " | y : " << vec.y << " | z : " << vec.z << std::endl;
+    // printAttributes(camera);
 }

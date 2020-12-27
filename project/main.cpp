@@ -44,6 +44,7 @@ float lastFrame = 0.0f;
 
 
 int main(int argc, char** argv) {
+
   // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -184,6 +185,7 @@ int main(int argc, char** argv) {
         glfwPollEvents();
     }
 
+<<<<<<< HEAD
 
     //on libère la musique
     Mix_FreeMusic(musique);
@@ -191,6 +193,8 @@ int main(int argc, char** argv) {
     Mix_CloseAudio();
 
 
+=======
+>>>>>>> Alo_camera_mouv
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
     glfwTerminate();
@@ -213,6 +217,7 @@ void processInput(GLFWwindow *window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+<<<<<<< HEAD
     if (glm::distance(camera.Position,glm::vec3(-2.3f, 10.f, 28.f)) < 1.0){
         std::cout << "A distance d'activer" << std::endl;
         std::cout << Mix_GetError() << std::endl;
@@ -220,6 +225,18 @@ void processInput(GLFWwindow *window)
             camera.Position = glm::vec3(-2.3f, 10.f, 28.f);
     }
     
+=======
+/*  if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+            camera.moveUP(UP, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_CTRL) == GLFW_PRESS)
+        camera.MoveUp(DOWN, deltaTime);
+// acceleration camera 
+    if (glfwGetKey(window, GLFW_KEY_SHIFT) == GLFW_PRESS)
+        camera.Accelerer(SPEEDUP, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_CTRL+SHIFT) == GLFW_PRESS)
+        camera.Accelerer(SLOWDOWN, deltaTime);    
+    */
+>>>>>>> Alo_camera_mouv
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

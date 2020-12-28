@@ -44,6 +44,7 @@ float lastFrame = 0.0f;
 
 
 int main(int argc, char** argv) {
+
   // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -125,7 +126,7 @@ int main(int argc, char** argv) {
     }
     Mix_Music *musique;
     
-    std::string chemin = fullpath+"/assets/musiques/7rings-ariana.mp3";
+    std::string chemin = fullpath+"/assets/musiques/music2.mp3";
     //const char *music1 = fullpath.c_str() + "/assets/musiques/music1.mp3".c_str();
     musique = Mix_LoadMUS(chemin.c_str());
     Mix_PlayMusic(musique, -1); //Joue infiniment la musique

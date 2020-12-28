@@ -12,7 +12,11 @@ enum Camera_Movement {
     FORWARD,
     BACKWARD,
     LEFT,
-    RIGHT
+    RIGHT/*,
+    UP,
+    DOWN, 
+    SPEEDUP, 
+    SLOWDOWN*/
 };
 
 // Default camera values
@@ -33,6 +37,7 @@ public:
     glm::vec3 Up;
     glm::vec3 Right;
     glm::vec3 WorldUp;
+
     // euler Angles
     float Yaw;
     float Pitch;
@@ -78,7 +83,33 @@ public:
             Position -= Right * velocity;
         if (direction == RIGHT)
             Position += Right * velocity;
+    
     }
+    // se déplacer vers le haut et vers le bas
+    /*  
+    void MoveUp(Camera_Movement direction, float deltaTime) 
+    {
+        if (vitesse == UP)
+            Position += Up * velocity;
+        if (direction == DOWN)
+            Position -= Up * velocity;
+    }
+    
+    */
+
+   // accélération de la caméra
+   /*
+    void Accelerer(Camera_Movement vitesse, float deltaTime) //vitesse ou direction
+    {
+        if (vitesse == SPEEDUP)
+            SPEED *= 2;
+        if (direction == SLOWDOWN)
+            SPEED /= 2;
+    }
+
+   */
+
+
 
     // processes input received from a mouse input system. Expects the offset value in both the x and y direction.
     void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true)
@@ -113,6 +144,12 @@ public:
     }
 
 private:
+
+    /*
+    float vitesse{};
+    bool accelerationEnCours{};
+    static const float ACCELERATION;
+    */
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors()
     {

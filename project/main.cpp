@@ -119,6 +119,10 @@ int main(int argc, char** argv) {
     std::string gobPath = fullpath + "assets/models/gob.obj";
     std::string cubePath = fullpath + "assets/models/cubetexture.obj";
     
+    std::string chemin = fullpath+"/assets/musiques/music2.mp3";
+    //const char *music1 = fullpath.c_str() + "/assets/musiques/music1.mp3".c_str();
+    musique = Mix_LoadMUS(chemin.c_str());
+    Mix_PlayMusic(musique, -1); //Joue infiniment la musique
 
     //On charge les modèles avec ASSIMP
     //Model LowPolyTrees(LowPolyTreesPath);
@@ -167,6 +171,9 @@ int main(int argc, char** argv) {
           1,
           GL_FALSE,
           glm::value_ptr(NormalMatrix));
+        LoadModel.models[3].DrawModel(program);
+        printVec3(camera.Position);
+        //LoadModel.drawModelLoaded(LoadModel.models["LowPolyTrees"]);
 
         cube.DrawModel(program);
         //LowPolyTrees.DrawModel(program);

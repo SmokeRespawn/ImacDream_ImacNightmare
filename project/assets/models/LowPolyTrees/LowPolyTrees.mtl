@@ -1,7 +1,29 @@
 # Blender MTL File: 'None'
-# Material Count: 11
+# Material Count: 14
 
-newmtl Material__58.001
+newmtl Blue
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd TrashbinBlue_basecolor.png
+
+newmtl Green
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd TrashbinGreen_basecolor.png
+
+newmtl Material__58.002
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -12,7 +34,7 @@ d 1.000000
 illum 2
 map_Kd BackGround_Tree.png
 
-newmtl Tree1.001
+newmtl Tree1.002
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -23,7 +45,7 @@ d 1.000000
 illum 2
 map_Kd Tree_01.png
 
-newmtl Tree2.001
+newmtl Tree2.002
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -34,7 +56,7 @@ d 1.000000
 illum 2
 map_Kd Tree_02.png
 
-newmtl Tree3.001
+newmtl Tree3.002
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -45,7 +67,19 @@ d 1.000000
 illum 2
 map_Kd Tree_03.png
 
-newmtl tree10_H.001
+newmtl Yellow
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd TrashbinYellow_basecolor.png
+
+
+newmtl tree10_H.002
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -56,7 +90,7 @@ d 1.000000
 illum 2
 map_Kd Tree_10_House.png
 
-newmtl tree10_T.001
+newmtl tree10_T.002
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -67,7 +101,7 @@ d 1.000000
 illum 2
 map_Kd Tree_10_Tree.png
 
-newmtl tree4.001
+newmtl tree4.002
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -78,7 +112,7 @@ d 1.000000
 illum 2
 map_Kd Tree_04.png
 
-newmtl tree5.001
+newmtl tree5.002
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -89,7 +123,7 @@ d 1.000000
 illum 2
 map_Kd Tree_05.png
 
-newmtl tree6.001
+newmtl tree6.002
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -100,7 +134,7 @@ d 1.000000
 illum 2
 map_Kd Tree_06.png
 
-newmtl tree7.001
+newmtl tree7.002
 Ns 323.999994
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -111,7 +145,7 @@ d 1.000000
 illum 2
 map_Kd Tree_07.png
 
-newmtl wire_229166215.001
+newmtl wire_229166215.002
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000

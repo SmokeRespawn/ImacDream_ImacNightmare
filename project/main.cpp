@@ -176,6 +176,7 @@ int main(int argc, char** argv) {
           GL_FALSE,
           glm::value_ptr(NormalMatrix));
         LoadModel.models[0].DrawModel(program);
+        //LoadModel.models[4].DrawModel(program);
         printVec3(camera.Position);
         //LoadModel.drawModelLoaded(LoadModel.models["LowPolyTrees"]);
 

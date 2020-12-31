@@ -103,6 +103,19 @@ int main(int argc, char** argv) {
     GLint locationMVMatrix = glGetUniformLocation(idProg, "uMVMatrix");
     GLint locationNormal = glGetUniformLocation(idProg, "uNormalMatrix");
 
+    //On récupère les lumières
+    GLint uLightDir = glGetUniformLocation(idProg, "light.direction");
+    GLint uLightAmbient = glGetUniformLocation(idProg, "light.ambient");
+    GLint uLightDiffuse = glGetUniformLocation(idProg, "light.diffuse");
+    GLint uLightSpecular = glGetUniformLocation(idProg, "light.specular");
+
+    //On récupère les matériaux
+    GLint uMatDiffuse = glGetUniformLocation(idProg, "material.diffuse");
+    GLint uMatSpecular = glGetUniformLocation(idProg, "material.specular");
+    GLint uMatShininess = glGetUniformLocation(idProg, "material.shininess");
+
+    GLint uViewPos = glGetUniformLocation(idProg, "material.viewPos");
+
     glEnable(GL_DEPTH_TEST);
     //glDepthFunc(GL_ALWAYS);
 
@@ -168,6 +181,18 @@ int main(int argc, char** argv) {
         MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5f,0.5f,0.5f));
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
+        glm::vec4 LightDir(1.0f, 1.0f, 1.0f, 0.0f);
+        LightDir = LightDir*ViewMatrix;
+        glUniform3f(uLightDir, LightDir.x, LightDir.y, LightDir.z);
+        glUniform3f(uViewPos, camera.Position.x, camera.Position.y, camera.Position.z);
+
+        glUniform3f(uLightAmbient, 0.5f, 0.5f, 0.5f);
+        glUniform3f(uLightDiffuse, 1.2f, 1.2f, 1.2f);
+        glUniform3f(uLightSpecular, 1.2f, 1.2f, 1.2f);
+
+        glUniform3f(uMatSpecular, 0.5f, 0.5f, 0.5f);
+        glUniform1f(uMatShininess, 15.0f);
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUniformMatrix4fv(locationMVPMatrix,1,GL_FALSE,glm::value_ptr(ProjMatrix * MVMatrix));
 
@@ -213,6 +238,12 @@ void processInput(GLFWwindow *window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+    if (glm::distance(camera.Position,glm::vec3(-2.3f, 10.f, 28.f)) < 1.0){
+        std::cout << "A distance d'activer" << std::endl;
+        std::cout << Mix_GetError() << std::endl;
+        if (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
+            camera.Position = glm::vec3(-2.3f, 10.f, 28.f);
+    }
     
 }
 

@@ -36,8 +36,6 @@ Created by Eric Wing.  This was influenced by the FindSDL.cmake
 module, but with modifications to recognize OS X frameworks and
 additional Unix paths (FreeBSD, etc).
 #]=======================================================================]
-# Additional modules
-include(FindPackageHandleStandardArgs)
 
 if(NOT SDL_MIXER_INCLUDE_DIR AND SDLMIXER_INCLUDE_DIR)
   set(SDL_MIXER_INCLUDE_DIR ${SDLMIXER_INCLUDE_DIR} CACHE PATH "directory cache
@@ -89,6 +87,7 @@ endif()
 set(SDL_MIXER_LIBRARIES ${SDL_MIXER_LIBRARY})
 set(SDL_MIXER_INCLUDE_DIRS ${SDL_MIXER_INCLUDE_DIR})
 
+include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL_mixer
                                   REQUIRED_VARS SDL_MIXER_LIBRARIES SDL_MIXER_INCLUDE_DIRS

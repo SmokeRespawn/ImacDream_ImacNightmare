@@ -27,7 +27,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
-void enigme(GLFWwindow *window,LoadModel* LoadModel);
 void printVec3(glm::vec3 vec);
 
 // settings
@@ -101,6 +100,19 @@ int main(int argc, char** argv) {
     GLint locationMVMatrix = glGetUniformLocation(idProg, "uMVMatrix");
     GLint locationNormal = glGetUniformLocation(idProg, "uNormalMatrix");
 
+    //On récupère les lumières
+    GLint uLightDir = glGetUniformLocation(idProg, "light.direction");
+    GLint uLightAmbient = glGetUniformLocation(idProg, "light.ambient");
+    GLint uLightDiffuse = glGetUniformLocation(idProg, "light.diffuse");
+    GLint uLightSpecular = glGetUniformLocation(idProg, "light.specular");
+
+    //On récupère les matériaux
+    GLint uMatDiffuse = glGetUniformLocation(idProg, "material.diffuse");
+    GLint uMatSpecular = glGetUniformLocation(idProg, "material.specular");
+    GLint uMatShininess = glGetUniformLocation(idProg, "material.shininess");
+
+    GLint uViewPos = glGetUniformLocation(idProg, "material.viewPos");
+
     glEnable(GL_DEPTH_TEST);
     //glDepthFunc(GL_ALWAYS);
 
@@ -151,7 +163,6 @@ int main(int argc, char** argv) {
         if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
             glfwSetCursorPosCallback(window, mouse_callback);//On place la souris au centre de l'écran et on appuie sur P
         processInput(window);
-        enigme(window,&LoadModel);
 
         glm::mat4 ViewMatrix = camera.GetViewMatrix();
         glm::mat4 ProjMatrix = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -159,6 +170,18 @@ int main(int argc, char** argv) {
         MVMatrix = ViewMatrix * glm::translate(glm::mat4(1), glm::vec3(0, 0, -5));
         MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5f,0.5f,0.5f));
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+
+        glm::vec4 LightDir(1.0f, 1.0f, 1.0f, 0.0f);
+        LightDir = LightDir*ViewMatrix;
+        glUniform3f(uLightDir, LightDir.x, LightDir.y, LightDir.z);
+        glUniform3f(uViewPos, camera.Position.x, camera.Position.y, camera.Position.z);
+
+        glUniform3f(uLightAmbient, 0.5f, 0.5f, 0.5f);
+        glUniform3f(uLightDiffuse, 1.2f, 1.2f, 1.2f);
+        glUniform3f(uLightSpecular, 1.2f, 1.2f, 1.2f);
+
+        glUniform3f(uMatSpecular, 0.5f, 0.5f, 0.5f);
+        glUniform1f(uMatShininess, 15.0f);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUniformMatrix4fv(
@@ -178,15 +201,7 @@ int main(int argc, char** argv) {
           1,
           GL_FALSE,
           glm::value_ptr(NormalMatrix));
-        //LoadModel.solved1 = true;
-        if (LoadModel.solved1 == false){
-            LoadModel.models[0].DrawModel(program);
-        }
-        if (LoadModel.solved1 == true){
-            LoadModel.models[4].DrawModel(program);
-        }
-        std::cout << LoadModel.clues[0] << std::endl;
-        
+        LoadModel.models[0].DrawModel(program);
         
         if (t >= 1){
             t = time(0);
@@ -228,6 +243,12 @@ void processInput(GLFWwindow *window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+    if (glm::distance(camera.Position,glm::vec3(-2.3f, 10.f, 28.f)) < 1.0){
+        std::cout << "A distance d'activer" << std::endl;
+        std::cout << Mix_GetError() << std::endl;
+        if (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
+            camera.Position = glm::vec3(-2.3f, 10.f, 28.f);
+    }
     
 }
 
@@ -269,33 +290,4 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 void printVec3(glm::vec3 vec){
     std::cout << "x : " << vec.x << " | y : " << vec.y << " | z : " << vec.z << std::endl;
-}
-
-void enigme(GLFWwindow *window,LoadModel* LoadModel){
-    if (glm::distance(camera.Position,LoadModel->cluePos[0]) < 2.0){
-        std::cout << "Appuyez sur E pour valider l'indice 1" << std::endl;
-        if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
-            LoadModel->clues[0] = 1;
-            std::cout << "Indice 1 validé !" << std::endl;
-        }
-    }
-    if (glm::distance(camera.Position,LoadModel->cluePos[1]) < 2.0){
-        std::cout << "Appuyez sur E pour valider l'indice 2" << std::endl;
-        if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
-            LoadModel->clues[1] = 2;
-            std::cout << "Indice 2 validé !" << std::endl;
-        }
-    }
-    if (glm::distance(camera.Position,LoadModel->cluePos[2]) < 2.0){
-        std::cout << "Appuyez sur E pour valider l'indice 3" << std::endl;
-        if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
-            LoadModel->clues[2] = 3;
-            std::cout << "Indice 3 validé !" << std::endl;
-        }
-    }
-    if (LoadModel->clues[0] == 1 && LoadModel->clues[1] == 2 && LoadModel->clues[2] == 3){
-        std::cout << "Bravo vous avez terminé le monde 1, allez sur la plateforme de téléportation devant la maison et appuyez sur T pour vous téléporter vers le monde 2 !" << std::endl;
-        LoadModel->solved1 = true;
-        //juste à mettre la téléportation vers le monde 2
-    }
 }

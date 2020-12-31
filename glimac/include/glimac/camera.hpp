@@ -146,9 +146,14 @@ public:
 private:
 
     /*
-    float vitesse{};
-    bool accelerationEnCours{};
-    static const float ACCELERATION;
+    //fonction afficher les attributs de camera
+    void printAttributes(camera)
+    {
+        std::cout << position << printVec3(camera.Position)<< std::endl;
+        std::cout << up << printVec3(camera.WorlUp)<< std::endl;
+        std::cout << yaw << printVec3(camera.Yaw)<< std::endl;
+        std::cout << pitch << printVec3(camera.Pitch)<< std::endl;
+    }
     */
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors()

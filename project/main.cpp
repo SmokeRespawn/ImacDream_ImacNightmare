@@ -199,10 +199,8 @@ int main(int argc, char** argv) {
         glUniformMatrix4fv(locationMVMatrix,1,GL_FALSE,glm::value_ptr(MVMatrix));
 
         glUniformMatrix4fv(locationNormal,1,GL_FALSE,glm::value_ptr(NormalMatrix));
-        
         /* Lancement du jeu */
         game(window,&LoadModel,&enigme1,&enigme2,&enigme3,&program);
-        
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -244,7 +242,16 @@ void processInput(GLFWwindow *window)
         if (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
             camera.Position = glm::vec3(-2.3f, 10.f, 28.f);
     }
-    
+/*  if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+            camera.moveUP(UP, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_CTRL) == GLFW_PRESS)
+// acceleration camera 
+        camera.MoveUp(DOWN, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_SHIFT) == GLFW_PRESS)
+        camera.Accelerer(SPEEDUP, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_CTRL+SHIFT) == GLFW_PRESS)
+        camera.Accelerer(SLOWDOWN, deltaTime);    
+    */
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -285,6 +292,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 void printVec3(glm::vec3 vec){
     std::cout << "x : " << vec.x << " | y : " << vec.y << " | z : " << vec.z << std::endl;
+    // printAttributes(camera);
 }
 
 void enigme(GLFWwindow *window,LoadModel* LoadModel, Enigme* enigme){

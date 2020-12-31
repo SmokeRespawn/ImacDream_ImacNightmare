@@ -18,6 +18,7 @@
 #include <glimac/actualPath.hpp>
 #include <glimac/camera.hpp>
 #include <glimac/modelLoading.hpp>
+#include <glimac/enigme.hpp>
 
 
 
@@ -27,8 +28,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
-void enigme(GLFWwindow *window,LoadModel* LoadModel);
+void enigme(GLFWwindow *window,LoadModel* LoadModel, Enigme* enigme);
 void printVec3(glm::vec3 vec);
+void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme2, Enigme* enigme3,Program* program);
 
 // settings
 const unsigned int SCR_WIDTH = 1080;
@@ -132,10 +134,17 @@ int main(int argc, char** argv) {
     //const char *music1 = fullpath.c_str() + "/assets/musiques/music1.mp3".c_str();
     musique = Mix_LoadMUS(chemin.c_str());
     Mix_PlayMusic(musique, -1); //Joue infiniment la musique
+    
+    //On charge les enigmes
+    Enigme enigme1;
+    Enigme enigme2;
+    Enigme enigme3;
+    enigme1.setCluePositions(cluePos1); //cluePos1 déclaré dans enigme
+    
+    
 
-
-    //On charge les modèles avec ASSIMP
-
+    printVec3(enigme1.cluePos[0]);
+    std::cout << "là ok" <<std::endl;
     // Application loop:
     bool done = false;
     while(!glfwWindowShouldClose(window)) {
@@ -151,7 +160,6 @@ int main(int argc, char** argv) {
         if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
             glfwSetCursorPosCallback(window, mouse_callback);//On place la souris au centre de l'écran et on appuie sur P
         processInput(window);
-        enigme(window,&LoadModel);
 
         glm::mat4 ViewMatrix = camera.GetViewMatrix();
         glm::mat4 ProjMatrix = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -161,38 +169,15 @@ int main(int argc, char** argv) {
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glUniformMatrix4fv(
-          locationMVPMatrix,
-  	      1,
-  	      GL_FALSE,
-  	      glm::value_ptr(ProjMatrix * MVMatrix));
+        glUniformMatrix4fv(locationMVPMatrix,1,GL_FALSE,glm::value_ptr(ProjMatrix * MVMatrix));
 
-        glUniformMatrix4fv(
-          locationMVMatrix,
-          1,
-          GL_FALSE,
-          glm::value_ptr(MVMatrix));
+        glUniformMatrix4fv(locationMVMatrix,1,GL_FALSE,glm::value_ptr(MVMatrix));
 
-        glUniformMatrix4fv(
-          locationNormal,
-          1,
-          GL_FALSE,
-          glm::value_ptr(NormalMatrix));
-        //LoadModel.solved1 = true;
-        if (LoadModel.solved1 == false){
-            LoadModel.models[0].DrawModel(program);
-        }
-        if (LoadModel.solved1 == true){
-            LoadModel.models[4].DrawModel(program);
-        }
-        std::cout << LoadModel.clues[0] << std::endl;
+        glUniformMatrix4fv(locationNormal,1,GL_FALSE,glm::value_ptr(NormalMatrix));
         
+        /* Lancement du jeu */
+        game(window,&LoadModel,&enigme1,&enigme2,&enigme3,&program);
         
-        if (t >= 1){
-            t = time(0);
-            printVec3(camera.Position);
-        }
-        //LoadModel.drawModelLoaded(LoadModel.models["LowPolyTrees"]);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -271,31 +256,44 @@ void printVec3(glm::vec3 vec){
     std::cout << "x : " << vec.x << " | y : " << vec.y << " | z : " << vec.z << std::endl;
 }
 
-void enigme(GLFWwindow *window,LoadModel* LoadModel){
-    if (glm::distance(camera.Position,LoadModel->cluePos[0]) < 2.0){
+void enigme(GLFWwindow *window,LoadModel* LoadModel, Enigme* enigme){
+    if (glm::distance(camera.Position,enigme->cluePos[0]) < 2.0){
         std::cout << "Appuyez sur E pour valider l'indice 1" << std::endl;
         if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
-            LoadModel->clues[0] = 1;
+            enigme->clues[0] = 1;
             std::cout << "Indice 1 validé !" << std::endl;
         }
     }
-    if (glm::distance(camera.Position,LoadModel->cluePos[1]) < 2.0){
+    if (glm::distance(camera.Position,enigme->cluePos[1]) < 2.0){
         std::cout << "Appuyez sur E pour valider l'indice 2" << std::endl;
         if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
-            LoadModel->clues[1] = 2;
+            enigme->clues[1] = 2;
             std::cout << "Indice 2 validé !" << std::endl;
         }
     }
-    if (glm::distance(camera.Position,LoadModel->cluePos[2]) < 2.0){
+    if (glm::distance(camera.Position,enigme->cluePos[2]) < 2.0){
         std::cout << "Appuyez sur E pour valider l'indice 3" << std::endl;
         if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
-            LoadModel->clues[2] = 3;
+            enigme->clues[2] = 3;
             std::cout << "Indice 3 validé !" << std::endl;
         }
     }
-    if (LoadModel->clues[0] == 1 && LoadModel->clues[1] == 2 && LoadModel->clues[2] == 3){
-        std::cout << "Bravo vous avez terminé le monde 1, allez sur la plateforme de téléportation devant la maison et appuyez sur T pour vous téléporter vers le monde 2 !" << std::endl;
-        LoadModel->solved1 = true;
+    if (enigme->clues[0] == 1 && enigme->clues[1] == 2 && enigme->clues[2] == 3){
+        std::cout << "Bravo vous avez terminé ce monde, allez sur la plateforme de téléportation devant la maison et appuyez sur T pour vous téléporter vers le monde suivant !" << std::endl;
+        enigme->solved = true;
+        std::cout << to_string(enigme->solved);
         //juste à mettre la téléportation vers le monde 2
     }
+}
+void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme2, Enigme* enigme3,Program* program){
+    enigme(window,LoadModel,enigme1);
+    std::cout << " 1 : " << enigme1->clues[0] << " | 2 : " << enigme1->clues[1] << " | 3 : " << enigme1->clues[2] << std::endl;
+        if (!enigme1->solved){
+            LoadModel->models[0].DrawModel(*program);
+        }
+        if (&enigme1->solved){
+            LoadModel->models[4].DrawModel(*program);
+            std::cout << "solved" << std::endl;
+        }
+
 }

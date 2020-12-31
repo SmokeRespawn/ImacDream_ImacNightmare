@@ -31,7 +31,7 @@ std::string actualPath(const char* argv){
       std::string fullpath = buffer;
       fullpath = std::string(fullpath, 0, fullpath.rfind("/"));
       fullpath = std::string(fullpath, 0, fullpath.rfind("b"));
-      fullpath += "ImacDream_ImacNightmare/project/";
+      fullpath += "project/project/";
       return fullpath;
       std::cout << fullpath << std::endl;
 

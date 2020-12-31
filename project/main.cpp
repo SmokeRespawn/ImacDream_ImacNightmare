@@ -330,8 +330,8 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
         if (!enigme1->solved){
             LoadModel->models[0].DrawModel(*program);
         }
-        if (&enigme1->solved){
-            LoadModel->models[4].DrawModel(*program);
+        if (enigme1->solved){
+            LoadModel->models[1].DrawModel(*program);
             std::cout << "solved" << std::endl;
         }
 

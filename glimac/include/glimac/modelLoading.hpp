@@ -16,11 +16,9 @@ class LoadModel
 {
 public:
     std::string LowPolyTreesPath = "assets/models/LowPolyTrees/LowPolyTrees.obj"; // 0
-    std::string monkeyPath = "assets/models/monkey.obj";                          // 1
-    std::string simpleBoxPath = "assets/models/simpleBox.obj";                    // 2
-    std::string LowPolyTreesSolvedPath = "assets/models/LowPolyTrees/LowPolyTreesSolved.obj"; // 4
-    std::string LowPolyForestPath = "assets/models/LowPolyForest/LowPolyForest.obj" ;// 3
-  //std::string monde_3Path = "assets/models/monde_3.obj";                    // 4
+    std::string LowPolyTreesSolvedPath = "assets/models/LowPolyTrees/LowPolyTreesSolved.obj"; // 1
+    std::string LowPolyForestPath = "assets/models/LowPolyForest/LowPolyForest.obj" ;// 2
+    std::string monde_3Path = "assets/models/monde_3/monde_3.obj";                    // 3
     std::vector<Model> models;
 public:
     LoadModel();
@@ -31,22 +29,18 @@ public:
 LoadModel::LoadModel(std::string fullpath)
 {
     this->LowPolyTreesPath = fullpath + this->LowPolyTreesPath;
-    this->monkeyPath = fullpath + this->monkeyPath;
-    this->simpleBoxPath = fullpath + this->simpleBoxPath;
-    // this->monde_3Path = fullpath + this->monde_3Path;
+    this->LowPolyTreesSolvedPath = fullpath + this->LowPolyTreesSolvedPath;
+    this->LowPolyForestPath = fullpath + this->LowPolyForestPath;
+    this->monde_3Path = fullpath + this->monde_3Path;
     Model LowPolyTrees(LowPolyTreesPath);
-    Model monkey(monkeyPath);
-    Model simpleBox(simpleBoxPath);
+    Model LowPolyTreesSolved(LowPolyTreesSolvedPath);
+    Model LowPolyForest(LowPolyForestPath);
     //Model monde_3(monde_3Path);
     this->models.push_back(LowPolyTrees);
-    this->models.push_back(monkey);
-    this->models.push_back(simpleBox);
+    this->models.push_back(LowPolyTreesSolved);
+    this->models.push_back(LowPolyForest);
     //this->models.push_back(monde_3);
-}
-
-    
-
-}   
+}  
 
 LoadModel::~LoadModel()
 {

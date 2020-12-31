@@ -30,20 +30,15 @@ public:
 LoadModel::LoadModel(std::string fullpath)
 {
     this->LowPolyTreesPath = fullpath + this->LowPolyTreesPath;
-    this->LowPolyTreesSolvedPath = fullpath + this->LowPolyTreesSolvedPath;
     this->monkeyPath = fullpath + this->monkeyPath;
     this->simpleBoxPath = fullpath + this->simpleBoxPath;
-    this->LowPolyForestPath = fullpath + this->LowPolyForestPath;
     Model LowPolyTrees(LowPolyTreesPath);
     Model monkey(monkeyPath);
     Model simpleBox(simpleBoxPath);
-    Model LowPolyForest(LowPolyForestPath);
-    Model LowPolyTreesSolved(LowPolyTreesSolvedPath);
     this->models.push_back(LowPolyTrees);
     this->models.push_back(monkey);
     this->models.push_back(simpleBox);
-    this->models.push_back(LowPolyForest);
-    this->models.push_back(LowPolyTreesSolved);
+}
 
     
 

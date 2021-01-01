@@ -13,42 +13,37 @@ Librairies à installer (linux):
  - FreeType : _ dans le terminal __"sudo apt-get install libfreetype6-dev"__  
  - glew : _ dans le terminal __"sudo apt-get install libglew-dev"__  
  
- Une fois cloné le dossier du jeu doit bien s'appeler "project", l'arborescence doit ressembler à ça :
- project
-    ├── assets
-    │   └── models
-    ├── Assimp
-    ├── CMake
-    ├── glimac
-    │   ├── include
-    │   │   └── glimac
-    │   └── src
-    ├── project
-    │   ├── assets
-    │   │   ├── models
-    │   │   │   ├── LowPolyForest
-    │   │   │   ├── LowPolyTrees
-    │   │   │   └── monde_3
-    │   │   └── musiques
-    │   └── shaders
-    └── third-party
-        └── include
-            └── glm
-                ├── detail
-                ├── gtc
-                └── gtx
+ Une fois cloné le dossier du jeu doit bien s'appeler "project", l'arborescence doit ressembler à ça :  
+ project  
+    ├── assets  
+    │   └── models  
+    ├── Assimp  
+    ├── CMake  
+    ├── glimac  
+    │   ├── include  
+    │   │   └── glimac  
+    │   └── src  
+    ├── project  
+    │   ├── assets  
+    │   │   ├── models   
+    │   │   └── musiques  
+    │   └── shaders  
+    └── third-party  
+        └── include  
+            └── glm  
+            
 Pour charger le jeu : 
 se placer dans le dossier project et dans le terminal : 
-"cd .. && mkdir build && cd build && cmake ../project && make && ./project/project_main"
+__"cd .. && mkdir build && cd build && cmake ../project && make && ./project/project_main"__  
 
-Sinon les commandes peuvent se faire une par une : 
-créer un dossier build au même niveau que project :
-.
-├── build
-│
-└── project
-se placer dans le dossier build, ouvrir un terminal en faisant clic droit dans le dossier + ouvrir un terminal\n
-Et effectuer :\n
-"cmake ../project" pour build le projet, puis "make" pour compiler les librairies et créer l'éxécutable\n 
-Et finalement "./project/project_main" pour lancer le jeu\n
+Sinon les commandes peuvent se faire une par une :   
+créer un dossier build au même niveau que project :  
+.  
+├── build  
+│  
+└── project  
+se placer dans le dossier build, ouvrir un terminal en faisant clic droit dans le dossier + ouvrir un terminal  
+Et effectuer :  
+__"cmake ../project"__ pour build le projet, puis __"make"__ pour compiler les librairies et créer l'éxécutable  
+Et finalement __"./project/project_main"__ pour lancer le jeu  
 

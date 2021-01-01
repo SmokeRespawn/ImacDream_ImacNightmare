@@ -4,14 +4,14 @@ Repo pour le projet d'IMAC 2
 Librairies à installer (linux): 
 
  - glfw3 : _ télécharger la dernière version sur ce site : http://www.glfw.org/
-           _ extraire l'archive, se placer dans le dossier et executer les commandes suivantes : dans le terminal *"cmake -G "Unix Makefiles""* 
-                                                                                                  puis *"sudo apt-get install cmake xorg-dev libglu1-mesa-dev"*
-                                                                                                  et finalement *"sudo make" et "sudo make install"*
- - SDL : _ dans le terminal "sudo apt-get install libsdl1.2-dev
- - SDL_mixer : _ dans le terminal "sudo apt-get install libsdl-mixer1.2" et "sudo apt-get install libsdl-mixer1.2-dev"
- - SDL_ttf : _ dans le terminal "sudo apt-get install libsdl-ttf2.0-dev"
- - FreeType : _ dans le terminal "sudo apt-get install libfreetype6-dev"
- - glew : _ dans le terminal "sudo apt-get install libglew-dev"
+           _ extraire l'archive, se placer dans le dossier et executer les commandes suivantes : dans le terminal __"cmake -G "Unix Makefiles""__ 
+                                                                                                  puis __"sudo apt-get install cmake xorg-dev libglu1-mesa-dev"__
+                                                                                                  et finalement __"sudo make" et "sudo make install"__
+ - SDL : _ dans le terminal __"sudo apt-get install libsdl1.2-dev"__
+ - SDL_mixer : _ dans le terminal __"sudo apt-get install libsdl-mixer1.2"__ et __"sudo apt-get install libsdl-mixer1.2-dev"__  
+ - SDL_ttf : _ dans le terminal __"sudo apt-get install libsdl-ttf2.0-dev"__  
+ - FreeType : _ dans le terminal __"sudo apt-get install libfreetype6-dev"__  
+ - glew : _ dans le terminal __"sudo apt-get install libglew-dev"__  
  
  Une fois cloné le dossier du jeu doit bien s'appeler "project", l'arborescence doit ressembler à ça :
  project

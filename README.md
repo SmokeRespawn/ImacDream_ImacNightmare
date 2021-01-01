@@ -36,7 +36,7 @@ Repo pour le projet d'IMAC 2
 
 --------------------------------------            
 # Charger le jeu
-se placer dans le dossier project et dans le terminal : 
+Se placer dans le dossier project et dans le terminal : 
 __"cd .. && mkdir build && cd build && cmake ../project && make && ./project/project_main"__  
 
 Sinon les commandes peuvent se faire une par une :   

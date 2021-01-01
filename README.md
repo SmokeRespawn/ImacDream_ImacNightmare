@@ -47,8 +47,8 @@ créer un dossier build au même niveau que project :
 ├── build
 │
 └── project
-se placer dans le dossier build, ouvrir un terminal en faisant clic droit dans le dossier + ouvrir un terminal
-Et effectuer : 
-"cmake ../project" pour build le projet, puis "make" pour compiler les librairies et créer l'éxécutable 
-Et finalement "./project/project_main" pour lancer le jeu
+se placer dans le dossier build, ouvrir un terminal en faisant clic droit dans le dossier + ouvrir un terminal\n
+Et effectuer :\n
+"cmake ../project" pour build le projet, puis "make" pour compiler les librairies et créer l'éxécutable\n 
+Et finalement "./project/project_main" pour lancer le jeu\n
 

@@ -1,5 +1,7 @@
 ## ImacDream_ImacNightmare
+
 Repo pour le projet d'IMAC 2
+
 --------------------------------------
 # Librairies à installer (linux): 
 
@@ -30,7 +32,8 @@ Repo pour le projet d'IMAC 2
     │   └── shaders  
     └── third-party  
         └── include  
-            └── glm  
+            └── glm 
+
 --------------------------------------            
 # Charger le jeu
 se placer dans le dossier project et dans le terminal : 
@@ -42,7 +45,7 @@ créer un dossier build au même niveau que project :
 ├── build  
 │  
 └── project  
-se placer dans le dossier build, ouvrir un terminal en faisant clic droit dans le dossier + ouvrir un terminal  
+Se placer dans le dossier build, ouvrir un terminal en faisant clic droit dans le dossier + ouvrir un terminal  
 Et effectuer :  
 __"cmake ../project"__ pour build le projet, puis __"make"__ pour compiler les librairies et créer l'éxécutable  
 Et finalement __"./project/project_main"__ pour lancer le jeu  

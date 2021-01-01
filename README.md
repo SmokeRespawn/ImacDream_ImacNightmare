@@ -1,7 +1,7 @@
-# ImacDream_ImacNightmare
+## ImacDream_ImacNightmare
 Repo pour le projet d'IMAC 2
-
-Librairies à installer (linux): 
+--------------------------------------
+# Librairies à installer (linux): 
 
  - glfw3 : _ télécharger la dernière version sur ce site : http://www.glfw.org/
            _ extraire l'archive, se placer dans le dossier et executer les commandes suivantes : dans le terminal __"cmake -G "Unix Makefiles""__ 
@@ -31,8 +31,8 @@ Librairies à installer (linux):
     └── third-party  
         └── include  
             └── glm  
-            
-Pour charger le jeu : 
+--------------------------------------            
+# Charger le jeu
 se placer dans le dossier project et dans le terminal : 
 __"cd .. && mkdir build && cd build && cmake ../project && make && ./project/project_main"__  
 

@@ -12,6 +12,8 @@
 #include <glimac/Image.hpp>
 #include <glimac/Sphere.hpp>
 #include <glimac/FreeflyCamera.hpp>
+#include <glimac/camera.hpp>
+#include <glimac/CameraAttributes.hpp>
 
 #include <glimac/glm.hpp>
 #include <glimac/Model.hpp>
@@ -153,11 +155,15 @@ int main(int argc, char** argv) {
     Enigme enigme2;
     Enigme enigme3;
     enigme1.setCluePositions(cluePos1); //cluePos1 déclaré dans enigme
+    enigme2.setCluePositions(cluePos2); //cluePos2 déclaré dans enigme
+    enigme3.setCluePositions(cluePos2); //a faire
     
-    
-
     printVec3(enigme1.cluePos[0]);
     std::cout << "là ok" <<std::endl;
+
+    printVec3(enigme2.cluePos[0]);
+    std::cout << "là ok" <<std::endl;
+
     // Application loop:
     bool done = false;
     while(!glfwWindowShouldClose(window)) {
@@ -242,6 +248,11 @@ void processInput(GLFWwindow *window)
         if (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
             camera.Position = glm::vec3(-2.3f, 10.f, 28.f);
     }
+    
+    //affichage des coordonnées de la caméra
+    camera.PrintCameraPosition(camera.Position, camera.Front, camera.Up, camera.Right, camera.WorldUp, camera.Yaw, camera.Pitch);
+
+
 /*  if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
             camera.moveUP(UP, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_CTRL) == GLFW_PRESS)
@@ -324,15 +335,59 @@ void enigme(GLFWwindow *window,LoadModel* LoadModel, Enigme* enigme){
         //juste à mettre la téléportation vers le monde 2
     }
 }
-void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme2, Enigme* enigme3,Program* program){
-    enigme(window,LoadModel,enigme1);
-    std::cout << " 1 : " << enigme1->clues[0] << " | 2 : " << enigme1->clues[1] << " | 3 : " << enigme1->clues[2] << std::endl;
-        if (!enigme1->solved){
-            LoadModel->models[0].DrawModel(*program);
-        }
-        if (enigme1->solved){
-            LoadModel->models[1].DrawModel(*program);
-            std::cout << "solved" << std::endl;
-        }
 
+
+void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme2, Enigme* enigme3,Program* program){
+    
+    enigme1->portail = glm::vec3(3.702, 12.891, -4.451);
+    enigme2->portail = glm::vec3(1.119, 0.709, 6.519);
+    enigme3->portail = glm::vec3(3.702, 12.891, -4.451);
+
+    std::cout << " 1 : " << enigme1->clues[0] << " | 2 : " << enigme1->clues[1] << " | 3 : " << enigme1->clues[2] << std::endl;
+    std::cout << " 1 : " << enigme2->clues[0] << " | 2 : " << enigme2->clues[1] << " | 3 : " << enigme3->clues[2] << std::endl;
+    std::cout << " 1 : " << enigme2->clues[0] << " | 2 : " << enigme2->clues[1] << " | 3 : " << enigme3->clues[2] << std::endl;
+
+    if(!enigme1->solved && !enigme1->telep){
+        LoadModel->models[0].DrawModel(*program);
+        enigme(window,LoadModel,enigme1);
+    }
+    if(enigme1->solved && !enigme1->telep){
+        LoadModel->models[1].DrawModel(*program);
+        enigme(window,LoadModel,enigme1);
+        std::cout << "solved" << std::endl;
+        if(glm::distance(camera.Position, enigme1->portail) < 3.0) {
+            enigme1->telep = true;
+        } else {
+            enigme1->telep = false;
+        }
+    }
+    if(enigme1->solved && enigme1->telep && !enigme2->solved && !enigme2->telep){
+        enigme(window,LoadModel,enigme2);
+        LoadModel->models[2].DrawModel(*program);
+    }
+    if(enigme1->solved && enigme1->telep && enigme2->solved && !enigme2->telep){
+        enigme(window,LoadModel,enigme2);
+        LoadModel->models[3].DrawModel(*program);
+        std::cout << "solved" << std::endl;
+        if(glm::distance(camera.Position, enigme2->portail) < 3.0) {
+            enigme2->telep = true;
+        } else {
+            enigme2->telep = false;
+        }
+    }
+    if(enigme1->solved && enigme1->telep && enigme2->solved && enigme2->telep && !enigme3->solved && !enigme3->telep){
+        enigme(window,LoadModel,enigme3);
+        LoadModel->models[4].DrawModel(*program);
+    }
+    if(enigme1->solved && enigme1->telep && enigme2->solved && enigme2->telep && enigme3->solved && !enigme3->telep){
+        enigme(window,LoadModel,enigme3);
+        LoadModel->models[5].DrawModel(*program);
+        std::cout << "solved" << std::endl;
+        if(glm::distance(camera.Position, enigme3->portail) < 3.0) {
+            enigme3->telep = true;
+        } else {
+            enigme3->telep = false;
+        }
+    }
+        
 }

@@ -4,7 +4,8 @@
 #include <time.h>
 
 #include <SDL/SDL_mixer.h>
-
+#include <ft2build.h>
+#include FT_FREETYPE_H
 #include <iostream>
 
 #include <glimac/Program.hpp>
@@ -19,7 +20,7 @@
 #include <glimac/camera.hpp>
 #include <glimac/modelLoading.hpp>
 #include <glimac/enigme.hpp>
-
+#include <glimac/font.hpp>
 
 
 using namespace glimac;
@@ -49,6 +50,7 @@ float lastFrame = 0.0f;
 long t = time(0);
 int main(int argc, char** argv) {
 
+    
   // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -90,12 +92,19 @@ int main(int argc, char** argv) {
     }
 
     //Load shaders
-      FilePath applicationPath(argv[0]);
-        Program program = loadProgram(
-        applicationPath.dirPath() + "shaders/3D.vs.glsl",
-        applicationPath.dirPath() + "shaders/normals.fs.glsl"
-    );
+    FilePath applicationPath(argv[0]);
+    Program program = loadProgram(
+                                applicationPath.dirPath() + "shaders/3D.vs.glsl",
+                                applicationPath.dirPath() + "shaders/normals.fs.glsl"
+                                );
     program.use();
+    
+    Program textProgram = loadProgram(
+                                applicationPath.dirPath() + "shaders/text.vs.glsl",
+                                applicationPath.dirPath() + "shaders/text.fs.glsl"
+                                );
+
+    
 
     //location variables uniformes
     const GLuint idProg = program.getGLId();
@@ -153,11 +162,28 @@ int main(int argc, char** argv) {
     Enigme enigme2;
     Enigme enigme3;
     enigme1.setCluePositions(cluePos1); //cluePos1 déclaré dans enigme
-    
-    
+
+    Font font(fullpath);
+    font.fontInit();
+    float vertices[] = {-100.f,-100.f,0.,1.,
+                        100.f,-100.f,1.,1.,
+                        100.f,100.f, 0.5,0.,
+                        -100.f,100.f,0.,0.};
+    textProgram.use();
+    GLuint VAOtext,VBOtext;
+    glGenVertexArrays(1, &VAOtext);
+    glGenBuffers(1, &VBOtext);
+    glBindVertexArray(VAOtext);
+    glBindBuffer(GL_ARRAY_BUFFER, VBOtext);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, vertices, GL_DYNAMIC_DRAW);
+    glEnableVertexAttribArray(7);
+    glVertexAttribPointer(7, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 
     printVec3(enigme1.cluePos[0]);
-    std::cout << "là ok" <<std::endl;
+         
+    program.use();
     // Application loop:
     bool done = false;
     while(!glfwWindowShouldClose(window)) {
@@ -200,8 +226,18 @@ int main(int argc, char** argv) {
 
         glUniformMatrix4fv(locationNormal,1,GL_FALSE,glm::value_ptr(NormalMatrix));
         /* Lancement du jeu */
+        program.use();
         game(window,&LoadModel,&enigme1,&enigme2,&enigme3,&program);
+        textProgram.use();
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glm::mat4 projection = glm::ortho(0.0f, 1080.0f, 0.0f, 720.0f);
+        glUniformMatrix4fv(glGetUniformLocation(textProgram.getGLId(),"projection"),1,GL_FALSE,glm::value_ptr(projection));
+        
+        font.RenderText(&textProgram,VAOtext,VBOtext, "This is sample text", 25.f, 25.f, 5.f, glm::vec3(1.f, 0.f, 0.f));
+        //program.use();
 
+        
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
@@ -213,7 +249,7 @@ int main(int argc, char** argv) {
     Mix_FreeMusic(musique);
     //on ferme SDL_mixer
     Mix_CloseAudio();
-
+    //font.killFont();
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
@@ -237,7 +273,7 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
     if (glm::distance(camera.Position,glm::vec3(-2.3f, 10.f, 28.f)) < 1.0){
-        std::cout << "A distance d'activer" << std::endl;
+        //std::cout << "A distance d'activer" << std::endl;
         std::cout << Mix_GetError() << std::endl;
         if (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
             camera.Position = glm::vec3(-2.3f, 10.f, 28.f);

@@ -8,12 +8,20 @@ std::vector<glm::vec3> cluePos1 = {
                                   glm::vec3(-9.57,6.31,-13.25)  //poubelle jaune
                                 };
 
+std::vector<glm::vec3> cluePos2 = {
+                                  glm::vec3(2.347, 5.220, -2.685), //bouteille 1
+                                  glm::vec3(-6.097, 5.695, -10.349), //bouteille 2 
+                                  glm::vec3(-1.445, 0.473, 4.173)  //bouteille 3
+                                };
+
 class Enigme
 {
 public:
     std::vector<glm::vec3> cluePos;
     int clues[3];
     bool solved = false;
+    bool telep = false;
+    glm::vec3 portail;
 
 public:
     inline void setSolved(bool value){

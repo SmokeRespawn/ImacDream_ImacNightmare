@@ -141,7 +141,19 @@ public:
             Zoom = 1.0f;
         if (Zoom > 45.0f)
             Zoom = 45.0f; 
-    }
+    };
+
+    void PrintCameraPosition(glm::vec3 position, glm::vec3 front, glm::vec3 up, glm::vec3 right, glm::vec3 worldup, float yaw, float pitch){
+        this->Position = position;
+        this->Front = front;
+        this->Up = up;
+        this->Right = right;
+        this->WorldUp = worldup;
+        this->Yaw = yaw;
+        this->Pitch = pitch;
+        
+        std::cout << "Position : " << position << ", Front : " << front << ", Up : " << up << ", Right : " << right << ", WorldUp : " << worldup << ", Yaw : " << yaw << ", Pitch : " << pitch << std::endl;
+    } 
 
 private:
 

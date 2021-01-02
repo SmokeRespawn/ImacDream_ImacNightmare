@@ -1,5 +1,5 @@
 # Blender MTL File: 'monde_3.blend'
-# Material Count: 82
+# Material Count: 88
 
 newmtl Book0_material
 Ns 323.999994
@@ -827,6 +827,39 @@ d 1.000000
 illum 2
 map_Kd jaune.png
 
+newmtl initialShadingGroup.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd charbon.png
+
+newmtl initialShadingGroup.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd charbon.png
+
+newmtl initialShadingGroup.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd charbon.png
+
 newmtl janela
 Ns 323.999994
 Ka 0.443439 0.443439 0.443439
@@ -837,6 +870,39 @@ Ni 1.000000
 d 1.000000
 illum 3
 map_Kd sol.png
+
+newmtl lambert2SG.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd rouge.png
+
+newmtl lambert2SG.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd rouge.png
+
+newmtl lambert2SG.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd rouge.png
 
 newmtl madeira
 Ns 323.999994

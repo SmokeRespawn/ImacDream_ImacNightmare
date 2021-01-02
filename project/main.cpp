@@ -426,7 +426,7 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
         }
     }
     if(enigme1->solved && enigme1->telep && enigme2->solved && enigme2->telep && enigme3->solved && enigme3->telep){
-        enigme(window,LoadModel,enigme3);
+        enigme(window,LoadModel,enigme3,font);
         LoadModel->models[6].DrawModel(*program);
     }
         

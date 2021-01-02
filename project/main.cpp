@@ -33,8 +33,8 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 void enigme(GLFWwindow *window,LoadModel* LoadModel, Enigme* enigme);
 void printVec3(glm::vec3 vec);
-void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme2, Enigme* enigme3,Program* program);
-
+void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme2, Enigme* enigme3,Program* program,Font* font);
+void write(Font* font, Program* textProgram,GLuint VAOtext,GLuint VBOtext, std::string text);
 // settings
 const unsigned int SCR_WIDTH = 1080;
 const unsigned int SCR_HEIGHT = 720;
@@ -188,6 +188,7 @@ int main(int argc, char** argv) {
     program.use();
     // Application loop:
     bool done = false;
+    
     while(!glfwWindowShouldClose(window)) {
         // per-frame time logic
         // --------------------
@@ -229,15 +230,9 @@ int main(int argc, char** argv) {
         glUniformMatrix4fv(locationNormal,1,GL_FALSE,glm::value_ptr(NormalMatrix));
         /* Lancement du jeu */
         program.use();
-        game(window,&LoadModel,&enigme1,&enigme2,&enigme3,&program);
-        textProgram.use();
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glm::mat4 projection = glm::ortho(0.0f, 1080.0f, 0.0f, 720.0f);
-        glUniformMatrix4fv(glGetUniformLocation(textProgram.getGLId(),"projection"),1,GL_FALSE,glm::value_ptr(projection));
-        
-        font.RenderText(&textProgram,VAOtext,VBOtext, "This is sample text", 25.f, 25.f, 5.f, glm::vec3(1.f, 0.f, 0.f));
-        //program.use();
+        game(window,&LoadModel,&enigme1,&enigme2,&enigme3,&program,&font);
+        write(&font,&textProgram,VAOtext,VBOtext,font.textToPrint);
+        program.use();
 
         
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -338,38 +333,43 @@ void printVec3(glm::vec3 vec){
     // printAttributes(camera);
 }
 
-void enigme(GLFWwindow *window,LoadModel* LoadModel, Enigme* enigme){
+void enigme(GLFWwindow *window,LoadModel* LoadModel, Enigme* enigme,Font* font){
     if (glm::distance(camera.Position,enigme->cluePos[0]) < 2.0){
-        std::cout << "Appuyez sur E pour valider l'indice 1" << std::endl;
+        if (font->textToPrint != "Indice 1 : ok !"){
+            font->textToPrint = "Appuyez sur E pour valider l'indice 1";
+        }
         if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
             enigme->clues[0] = 1;
-            std::cout << "Indice 1 validé !" << std::endl;
+            font->textToPrint = "Indice 1 : ok !";
         }
     }
     if (glm::distance(camera.Position,enigme->cluePos[1]) < 2.0){
-        std::cout << "Appuyez sur E pour valider l'indice 2" << std::endl;
+        if (font->textToPrint != "Indice 2 : ok !"){
+            font->textToPrint = "Appuyez sur E pour valider l'indice 2";
+        }
         if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
             enigme->clues[1] = 2;
-            std::cout << "Indice 2 validé !" << std::endl;
+            font->textToPrint = "Indice 2 : ok !";
         }
     }
     if (glm::distance(camera.Position,enigme->cluePos[2]) < 2.0){
-        std::cout << "Appuyez sur E pour valider l'indice 3" << std::endl;
+        if (font->textToPrint != "Indice 3 : ok !"){
+            font->textToPrint = "Appuyez sur E pour valider l'indice 3";
+        }
         if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS){
             enigme->clues[2] = 3;
-            std::cout << "Indice 3 validé !" << std::endl;
+            font->textToPrint = "Indice 3 : ok !";
         }
     }
     if (enigme->clues[0] == 1 && enigme->clues[1] == 2 && enigme->clues[2] == 3){
-        std::cout << "Bravo vous avez terminé ce monde, allez sur la plateforme de téléportation devant la maison et appuyez sur T pour vous téléporter vers le monde suivant !" << std::endl;
+        font->textToPrint = "Bravo vous avez terminé ce monde, allez sur la plateforme pour changer de monde !";
         enigme->solved = true;
         std::cout << to_string(enigme->solved);
-        //juste à mettre la téléportation vers le monde 2
     }
 }
 
 
-void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme2, Enigme* enigme3,Program* program){
+void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme2, Enigme* enigme3,Program* program,Font* font){
     
     enigme1->portail = glm::vec3(3.702, 12.891, -4.451);
     enigme2->portail = glm::vec3(1.119, 0.709, 6.519);
@@ -381,45 +381,58 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
 
     if(!enigme1->solved && !enigme1->telep){
         LoadModel->models[0].DrawModel(*program);
-        enigme(window,LoadModel,enigme1);
+        enigme(window,LoadModel,enigme1,font);
     }
     if(enigme1->solved && !enigme1->telep){
         LoadModel->models[1].DrawModel(*program);
-        enigme(window,LoadModel,enigme1);
+        enigme(window,LoadModel,enigme1,font);
         std::cout << "solved" << std::endl;
         if(glm::distance(camera.Position, enigme1->portail) < 3.0) {
             enigme1->telep = true;
+            font->textToPrint = "Bienvenue dans le monde 2 !";
         } else {
             enigme1->telep = false;
         }
     }
     if(enigme1->solved && enigme1->telep && !enigme2->solved && !enigme2->telep){
-        enigme(window,LoadModel,enigme2);
+        enigme(window,LoadModel,enigme2,font);
         LoadModel->models[2].DrawModel(*program);
     }
     if(enigme1->solved && enigme1->telep && enigme2->solved && !enigme2->telep){
-        enigme(window,LoadModel,enigme2);
+        enigme(window,LoadModel,enigme2,font);
         LoadModel->models[3].DrawModel(*program);
         std::cout << "solved" << std::endl;
         if(glm::distance(camera.Position, enigme2->portail) < 3.0) {
             enigme2->telep = true;
+            font->textToPrint = "Déjà ? Bienvenue dans le monde 3 !";
         } else {
             enigme2->telep = false;
         }
     }
     if(enigme1->solved && enigme1->telep && enigme2->solved && enigme2->telep && !enigme3->solved && !enigme3->telep){
-        enigme(window,LoadModel,enigme3);
+        enigme(window,LoadModel,enigme3,font);
         LoadModel->models[4].DrawModel(*program);
     }
     if(enigme1->solved && enigme1->telep && enigme2->solved && enigme2->telep && enigme3->solved && !enigme3->telep){
-        enigme(window,LoadModel,enigme3);
+        enigme(window,LoadModel,enigme3,font);
         LoadModel->models[5].DrawModel(*program);
         std::cout << "solved" << std::endl;
         if(glm::distance(camera.Position, enigme3->portail) < 3.0) {
             enigme3->telep = true;
+            font->textToPrint = "Bravo !";
         } else {
             enigme3->telep = false;
         }
     }
         
+}
+
+void write(Font* font, Program* textProgram,GLuint VAOtext,GLuint VBOtext, std::string text){
+    textProgram->use();
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glm::mat4 projection = glm::ortho(0.0f, 1080.0f, 0.0f, 720.0f);
+    glUniformMatrix4fv(glGetUniformLocation(textProgram->getGLId(),"projection"),1,GL_FALSE,glm::value_ptr(projection));
+    
+    font->RenderText(textProgram,VAOtext,VBOtext, text, 5.f, 680.f, 0.4f, glm::vec3(1.f, 1.f, 1.f));
 }

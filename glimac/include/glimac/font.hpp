@@ -29,6 +29,7 @@ private:
     FT_Face face;
     std::map<char, Character> Characters;
 public:
+    std::string textToPrint = "Bienvenue dans le 1er monde !";
     Font(std::string fullpath):fullpath(fullpath){}
     int fontInit();
     void RenderText(Program* program,unsigned int VAOtext, unsigned int VBOtext, std::string text, float x, float y, float scale, glm::vec3 color);

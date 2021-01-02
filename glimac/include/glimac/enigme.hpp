@@ -14,6 +14,12 @@ std::vector<glm::vec3> cluePos2 = {
                                   glm::vec3(-1.445, 0.473, 4.173)  //bouteille 3
                                 };
 
+std::vector<glm::vec3> cluePos3 = {
+                                  glm::vec3(0.895, 0.693, -3.547), //ramasseur 1
+                                  glm::vec3(-4.357, 1.226, -5.262), //ramasseur 2
+                                  glm::vec3(2.997, -1.148, -5.618)  //ramasseur 3
+                                };
+
 class Enigme
 {
 public:

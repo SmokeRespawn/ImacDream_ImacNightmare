@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
 #endif
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "IMACGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "ECOLOJEU", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -148,8 +148,7 @@ int main(int argc, char** argv) {
 
     
     
-    std::string chemin = fullpath+"/assets/musiques/music2.mp3";
-    //const char *music1 = fullpath.c_str() + "/assets/musiques/music1.mp3".c_str();
+    std::string chemin = fullpath+"/assets/musiques/music.mp3";
     musique = Mix_LoadMUS(chemin.c_str());
     Mix_PlayMusic(musique, -1); //Joue infiniment la musique
     
@@ -358,10 +357,12 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
 
     if(!enigme1->solved && !enigme1->telep){
         LoadModel->models[0].DrawModel(*program);
+        LoadModel->models[7].DrawModel(*program);
         enigme(window,LoadModel,enigme1,font);
     }
     if(enigme1->solved && !enigme1->telep){
         LoadModel->models[1].DrawModel(*program);
+        LoadModel->models[7].DrawModel(*program);
         enigme(window,LoadModel,enigme1,font);
         if(glm::distance(camera->Position, enigme1->portail) < 3.0) {
             enigme1->telep = true;
@@ -374,10 +375,12 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
     if(enigme1->solved && enigme1->telep && !enigme2->solved && !enigme2->telep){
         enigme(window,LoadModel,enigme2,font);
         LoadModel->models[2].DrawModel(*program);
+        LoadModel->models[8].DrawModel(*program);
     }
     if(enigme1->solved && enigme1->telep && enigme2->solved && !enigme2->telep){
         enigme(window,LoadModel,enigme2,font);
         LoadModel->models[3].DrawModel(*program);
+        LoadModel->models[8].DrawModel(*program);
         if(glm::distance(camera->Position, enigme2->portail) < 3.0) {
             enigme2->telep = true;
             font->textToPrint = "Si rapide ?? Bienvenue dans le monde 3 !";
@@ -389,10 +392,12 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
     if(enigme1->solved && enigme1->telep && enigme2->solved && enigme2->telep && !enigme3->solved && !enigme3->telep){
         enigme(window,LoadModel,enigme3,font);
         LoadModel->models[4].DrawModel(*program);
+        LoadModel->models[9].DrawModel(*program);
     }
     if(enigme1->solved && enigme1->telep && enigme2->solved && enigme2->telep && enigme3->solved && !enigme3->telep){
         enigme(window,LoadModel,enigme3,font);
         LoadModel->models[5].DrawModel(*program);
+        LoadModel->models[9].DrawModel(*program);
         if(glm::distance(camera->Position, enigme3->portail) < 3.0) {
             enigme3->telep = true;
             font->textToPrint = "Bravo !";
@@ -403,6 +408,7 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
     }
     if(enigme1->solved && enigme1->telep && enigme2->solved && enigme2->telep && enigme3->solved && enigme3->telep){
         LoadModel->models[6].DrawModel(*program);
+        LoadModel->models[10].DrawModel(*program);
     }
         
 }

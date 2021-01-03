@@ -1,4 +1,4 @@
-# Blender MTL File: 'monde_3.blend'
+# Blender MTL File: 'None'
 # Material Count: 89
 
 newmtl Book0_material
@@ -727,7 +727,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd portal/portal.png
+map_Kd portal.png
 
 newmtl Pink.1
 Ns 225.000000

@@ -70,7 +70,9 @@ public:
     {
         return glm::lookAt(Position, Position + Front, Up);
     }
-
+    void setAttributes(glm::vec3 Position,glm::vec3 Front,glm::vec3 Up,glm::vec3 Right,glm::vec3 WorldUp,float Yaw,float Pitch){
+        this->Position = Position;this->Front = Front;this->Up = Up;this->Right = Right; this->WorldUp = WorldUp; this->Yaw = Yaw; this->Pitch = Pitch;
+    }
     // processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
     void ProcessKeyboard(Camera_Movement direction, float deltaTime)
     {

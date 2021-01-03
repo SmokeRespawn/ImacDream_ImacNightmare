@@ -391,6 +391,7 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
         if(glm::distance(camera->Position, enigme1->portail) < 3.0) {
             enigme1->telep = true;
             font->textToPrint = "Bienvenue dans le monde 2 !";
+            camera->setAttributes(Position2,Front2,Up2,Right2,WorldUp2,Yaw2,Pitch2);
         } else {
             enigme1->telep = false;
         }
@@ -406,6 +407,7 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
         if(glm::distance(camera->Position, enigme2->portail) < 3.0) {
             enigme2->telep = true;
             font->textToPrint = "Déjà ? Bienvenue dans le monde 3 !";
+            camera->setAttributes(Position3,Front3,Up3,Right3,WorldUp3,Yaw3,Pitch3);
         } else {
             enigme2->telep = false;
         }

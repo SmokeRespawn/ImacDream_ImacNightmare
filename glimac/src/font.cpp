@@ -60,7 +60,6 @@ int Font::fontInit(){
             glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
             face->glyph->advance.x
         };
-        std::cout << "id : " << (int)character.TextureID <<std::endl;
         Characters.insert(std::pair<char, Character>(c, character));
     }
     FT_Done_Face(face);

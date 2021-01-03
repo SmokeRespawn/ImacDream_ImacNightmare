@@ -1,0 +1,39 @@
+<entities>
+    <entity>
+        <name>LowPolyTrees.001</name>
+        <position x="0.0" y="0.0" z="0.0" />
+        <rotation x="1.5707964897155762" y="-0.0" z="0.0" />
+        <scale x="1.0" y="1.0" z="1.0" />
+        <texture object="Tree_01" path="Tree_01.png" />
+        <texture object="Tree_02" path="Tree_02.png" />
+        <texture object="Tree_03" path="Tree_03.png" />
+        <texture object="Tree_04" path="Tree_04.png" />
+        <texture object="Tree_05" path="Tree_05.png" />
+        <texture object="Tree_06" path="Tree_06.png" />
+        <texture object="Tree_07" path="Tree_07.png" />
+        <texture object="Tree_08" path="Tree_08.png" />
+        <texture object="Tree_09" path="Tree_09.png" />
+        <texture object="Tree_10" path="Tree_10.png" />
+    </entity>
+    <entity>
+        <name>Trashbin.003</name>
+        <position x="0.0" y="0.0" z="0.0" />
+        <rotation x="1.5707964897155762" y="-0.0" z="0.0" />
+        <scale x="1.0" y="1.0" z="1.0" />
+        <texture path="TrashbinBlue_basecolor.png" />
+    </entity>
+    <entity>
+        <name>Trashbin.004</name>
+        <position x="0.0" y="0.0" z="0.0" />
+        <rotation x="1.5707964897155762" y="-0.0" z="0.0" />
+        <scale x="1.0" y="1.0" z="1.0" />
+        <texture path="TrashbinGreen_basecolor.png" />
+    </entity>
+    <entity>
+        <name>Trashbin.005</name>
+        <position x="0.0" y="0.0" z="0.0" />
+        <rotation x="1.5707964897155762" y="-0.0" z="0.0" />
+        <scale x="1.0" y="1.0" z="1.0" />
+        <texture path="TrashbinYellow_basecolor.png" />
+    </entity>
+</entities>

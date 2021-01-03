@@ -1,0 +1,38 @@
+<entities>
+    <entity>
+        <name>monde_3</name>
+        <position x="0.0" y="0.0" z="0.0" />
+        <rotation x="1.5707964897155762" y="-0.0" z="0.0" />
+        <scale x="1.0" y="1.0" z="1.0" />
+	<texture object="coussin" path="coussin.png" />
+	<texture object="livre1" path="livre1.png" />
+	<texture object="livre2" path="livre2.png" />
+	<texture object="livre3" path="livre3.png" />
+	<texture object="livre4" path="livre4.png" />
+	<texture object="livre5" path="livre5.png" />
+	<texture object="mur" path="mur.png" />
+	<texture object="pierre" path="pierre.png" />
+	<texture object="portal" path="portal.png" />
+	<texture object="poubelle" path="poubelle.png" />
+	<texture object="poutre" path="poutre.png" />
+	<texture object="rose_pale_plante" path="rose_pale_plante.png" />
+	<texture object="sol" path="sol.png" />
+	<texture object="saumon" path="saumon.png" />
+	<texture object="table" path="table.png" />
+	<texture object="tapis" path="tapis.png" />
+	<texture object="taupe" path="taupe.png" />
+	<texture object="turquoise" path="turquoise.png" />
+	<texture object="blanc" path="blanc.png" />
+	<texture object="blanc_casse" path="blanc_casse.png" />
+	<texture object="charbon" path="charbon.png" />
+	<texture object="bleu" path="bleu.png" />
+	<texture object="bleu_ciel" path="bleu_ciel.png" />
+	<texture object="bleu_fonce" path="bleu_fonce.png" />
+	<texture object="fushia" path="fushia.png" />
+	<texture object="jaune" path="jaune.png" />
+	<texture object="marron" path="marron.png" />
+	<texture object="marron_clair" path="marron_clair.png" />
+	<texture object="marron2" path="marron2.png" />
+	<texture object="rouge" path="rouge.png" />
+    </entity>
+</entities>

@@ -1,0 +1,10 @@
+<entities>
+    <entity>
+        <name>Cube</name>
+        <position x="0.0" y="0.0" z="9.952844619750977" />
+        <rotation x="0.0" y="0.0" z="0.0" />
+        <scale x="1.0" y="40.119564056396484" z="31.050832748413086" />
+	<texture object="ImageDemarrerJeu" path="ImageDemarrerJeu.png" />
+	<texture object="ImageFinJeu" path="ImageFinJeu.png" />
+    </entity>
+</entities>

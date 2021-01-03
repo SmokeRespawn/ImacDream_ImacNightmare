@@ -32,7 +32,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window);
 void enigme(GLFWwindow *window,LoadModel* LoadModel, Enigme* enigme);
-void printVec3(glm::vec3 vec);
 void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme2, Enigme* enigme3,Program* program,Font* font,Camera* camera);
 void write(Font* font, Program* textProgram,GLuint VAOtext,GLuint VBOtext, std::string text);
 // settings
@@ -49,7 +48,6 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-long t = time(0);
 bool start = false;
 int main(int argc, char** argv) {
 
@@ -64,10 +62,6 @@ int main(int argc, char** argv) {
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-
-
-
-
     // glfw window creation
     // --------------------
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "IMACGL", NULL, NULL);
@@ -79,20 +73,25 @@ int main(int argc, char** argv) {
     }
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    //glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //Changer NORMAL en disabled pour avoir une souris invisible, mais caméra fonctionne mieux en NORMAL
-    // Initialize SDL and open a window
-    //SDLWindowManager windowManager(800, 600, "GLImac");
-
+    
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();
     if(GLEW_OK != glewInitError) {
         std::cerr << glewGetErrorString(glewInitError) << std::endl;
         return EXIT_FAILURE;
     }
+    std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
+    std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
+
+    //initialisation de SDL_Mixer
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) {
+        std::cout << Mix_GetError() << std::endl;
+    }
+    Mix_Music *musique;
 
     //Load shaders
     FilePath applicationPath(argv[0]);
@@ -128,16 +127,14 @@ int main(int argc, char** argv) {
 
     GLint uViewPos = glGetUniformLocation(idProg, "material.viewPos");
 
-    glEnable(GL_DEPTH_TEST);
-    //glDepthFunc(GL_ALWAYS);
+    
 
     glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f), 800.f/600.f, 0.1f, 100.f);
     glm::mat4 MVMatrix = glm::translate(glm::mat4(1), glm::vec3(0, 0, -5));
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
 
-    std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
-    std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
+ 
 
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
@@ -149,11 +146,7 @@ int main(int argc, char** argv) {
     //On donne les chemins de chaque .obj nécessaires
     LoadModel LoadModel(fullpath);
 
-    //initialisation de SDL_Mixer, attention == ça renvoie 0 si c bon et -1 si y'a une erreur, d'où le Mix_GetError
-    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) {
-        std::cout << Mix_GetError() << std::endl;
-    }
-    Mix_Music *musique;
+    
     
     std::string chemin = fullpath+"/assets/musiques/music2.mp3";
     //const char *music1 = fullpath.c_str() + "/assets/musiques/music1.mp3".c_str();
@@ -168,6 +161,8 @@ int main(int argc, char** argv) {
     enigme2.setCluePositions(cluePos2); //cluePos2 déclaré dans enigme
     enigme3.setCluePositions(cluePos3); //a faire
     enigme3.setCluePositions(cluePos2); //a faire
+
+    //On initialise Font 
     Font font(fullpath);
     font.fontInit();
     float vertices[] = {-100.f,-100.f,0.,1.,
@@ -186,11 +181,9 @@ int main(int argc, char** argv) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    printVec3(enigme1.cluePos[0]);
     program.use();
     // Application loop:
-    bool done = false;
-    
+    glEnable(GL_DEPTH_TEST);
     while(!glfwWindowShouldClose(window)) {
         // per-frame time logic
         // --------------------
@@ -235,6 +228,7 @@ int main(int argc, char** argv) {
         if (!start){
             camera.setAttributes(Position4,Front4,Up4,Right4,WorldUp4,Yaw4,Pitch4);
             LoadModel.models[6].DrawModel(program);
+            write(&font,&textProgram,VAOtext,VBOtext,"Bienvenue, appuyez sur espace pour commencer et P pour utiliser regarder autour de vous.");
             if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
                 start = true;
                 camera.setAttributes(Position1,Front1,Up1,Right1,WorldUp1,Yaw1,Pitch1);
@@ -283,27 +277,6 @@ void processInput(GLFWwindow *window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
-    if (glm::distance(camera.Position,glm::vec3(-2.3f, 10.f, 28.f)) < 1.0){
-        //std::cout << "A distance d'activer" << std::endl;
-        std::cout << Mix_GetError() << std::endl;
-        if (glfwGetKey(window, GLFW_KEY_RIGHT_ALT) == GLFW_PRESS)
-            camera.Position = glm::vec3(-2.3f, 10.f, 28.f);
-    }
-    
-    //affichage des coordonnées de la caméra
-    camera.PrintCameraPosition(camera.Position, camera.Front, camera.Up, camera.Right, camera.WorldUp, camera.Yaw, camera.Pitch);
-
-
-/*  if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-            camera.moveUP(UP, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_CTRL) == GLFW_PRESS)
-// acceleration camera 
-        camera.MoveUp(DOWN, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_SHIFT) == GLFW_PRESS)
-        camera.Accelerer(SPEEDUP, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_CTRL+SHIFT) == GLFW_PRESS)
-        camera.Accelerer(SLOWDOWN, deltaTime);    
-    */
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -342,11 +315,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
     camera.ProcessMouseScroll(yoffset);
 }
 
-void printVec3(glm::vec3 vec){
-    std::cout << "x : " << vec.x << " | y : " << vec.y << " | z : " << vec.z << std::endl;
-    // printAttributes(camera);
-}
-
 void enigme(GLFWwindow *window,LoadModel* LoadModel, Enigme* enigme,Font* font){
     if (glm::distance(camera.Position,enigme->cluePos[0]) < 2.0){
         if (font->textToPrint != "Indice 1 : ok !"){
@@ -376,9 +344,8 @@ void enigme(GLFWwindow *window,LoadModel* LoadModel, Enigme* enigme,Font* font){
         }
     }
     if (enigme->clues[0] == 1 && enigme->clues[1] == 2 && enigme->clues[2] == 3){
-        font->textToPrint = "Bravo vous avez terminé ce monde, allez sur la plateforme pour changer de monde !";
+        font->textToPrint = "Bravo ! Allez sur la plateforme pour changer de monde !";
         enigme->solved = true;
-        std::cout << to_string(enigme->solved);
     }
 }
 
@@ -389,10 +356,6 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
     enigme2->portail = glm::vec3(1.119, 0.709, 6.519);
     enigme3->portail = glm::vec3(-15.997, 0.422, -5.708);
 
-    std::cout << " 1 : " << enigme1->clues[0] << " | 2 : " << enigme1->clues[1] << " | 3 : " << enigme1->clues[2] << std::endl;
-    std::cout << " 1 : " << enigme2->clues[0] << " | 2 : " << enigme2->clues[1] << " | 3 : " << enigme3->clues[2] << std::endl;
-    std::cout << " 1 : " << enigme3->clues[0] << " | 2 : " << enigme3->clues[1] << " | 3 : " << enigme3->clues[2] << std::endl;
-
     if(!enigme1->solved && !enigme1->telep){
         LoadModel->models[0].DrawModel(*program);
         enigme(window,LoadModel,enigme1,font);
@@ -400,7 +363,6 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
     if(enigme1->solved && !enigme1->telep){
         LoadModel->models[1].DrawModel(*program);
         enigme(window,LoadModel,enigme1,font);
-        std::cout << "solved" << std::endl;
         if(glm::distance(camera->Position, enigme1->portail) < 3.0) {
             enigme1->telep = true;
             font->textToPrint = "Bienvenue dans le monde 2 !";
@@ -416,10 +378,9 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
     if(enigme1->solved && enigme1->telep && enigme2->solved && !enigme2->telep){
         enigme(window,LoadModel,enigme2,font);
         LoadModel->models[3].DrawModel(*program);
-        std::cout << "solved" << std::endl;
         if(glm::distance(camera->Position, enigme2->portail) < 3.0) {
             enigme2->telep = true;
-            font->textToPrint = "Déjà ? Bienvenue dans le monde 3 !";
+            font->textToPrint = "Si rapide ?? Bienvenue dans le monde 3 !";
             camera->setAttributes(Position3,Front3,Up3,Right3,WorldUp3,Yaw3,Pitch3);
         } else {
             enigme2->telep = false;
@@ -432,7 +393,6 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
     if(enigme1->solved && enigme1->telep && enigme2->solved && enigme2->telep && enigme3->solved && !enigme3->telep){
         enigme(window,LoadModel,enigme3,font);
         LoadModel->models[5].DrawModel(*program);
-        std::cout << "solved" << std::endl;
         if(glm::distance(camera->Position, enigme3->portail) < 3.0) {
             enigme3->telep = true;
             font->textToPrint = "Bravo !";
@@ -442,7 +402,6 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
         }
     }
     if(enigme1->solved && enigme1->telep && enigme2->solved && enigme2->telep && enigme3->solved && enigme3->telep){
-        //enigme(window,LoadModel,enigme3,font);
         LoadModel->models[6].DrawModel(*program);
     }
         

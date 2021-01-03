@@ -21,6 +21,7 @@ public:
     std::string LowPolyForestSolvedPath = "assets/models/LowPolyForest/monde2final.obj" ;       // 3
     std::string monde_3Path = "assets/models/monde_3/monde_3.obj";                              // 4
     std::string monde_3SolvedPath = "assets/models/monde_3/monde_3_portal.obj";                 // 5
+    std::string start_endPath = "assets/models/start_end/Start_End.obj";                        // 6
 
     std::vector<Model> models;
 public:
@@ -37,18 +38,21 @@ LoadModel::LoadModel(std::string fullpath)
     this->LowPolyForestSolvedPath = fullpath + this->LowPolyForestSolvedPath;
     this->monde_3Path = fullpath + this->monde_3Path;
     this->monde_3SolvedPath = fullpath + this->monde_3SolvedPath;
+    this->start_endPath = fullpath + this->start_endPath;
     Model LowPolyTrees(LowPolyTreesPath);
     Model LowPolyTreesSolved(LowPolyTreesSolvedPath);
     Model LowPolyForest(LowPolyForestPath);
     Model LowPolyForestSolved(LowPolyForestSolvedPath);
     Model monde_3(monde_3Path);
     Model monde_3Solved(monde_3SolvedPath);
+    Model start_end(start_endPath);
     this->models.push_back(LowPolyTrees);
     this->models.push_back(LowPolyTreesSolved);
     this->models.push_back(LowPolyForest);
     this->models.push_back(LowPolyForestSolved);
     this->models.push_back(monde_3);
     this->models.push_back(monde_3Solved);
+    this->models.push_back(start_end);
 }  
 
 LoadModel::~LoadModel()

@@ -50,6 +50,7 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 long t = time(0);
+bool start = false;
 int main(int argc, char** argv) {
 
     
@@ -231,8 +232,20 @@ int main(int argc, char** argv) {
         glUniformMatrix4fv(locationNormal,1,GL_FALSE,glm::value_ptr(NormalMatrix));
         /* Lancement du jeu */
         program.use();
-        game(window,&LoadModel,&enigme1,&enigme2,&enigme3,&program,&font,&camera);
-        write(&font,&textProgram,VAOtext,VBOtext,font.textToPrint);
+        if (!start){
+            camera.setAttributes(Position4,Front4,Up4,Right4,WorldUp4,Yaw4,Pitch4);
+            LoadModel.models[6].DrawModel(program);
+            if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+                start = true;
+                camera.setAttributes(Position1,Front1,Up1,Right1,WorldUp1,Yaw1,Pitch1);
+            }
+                
+        }
+        else {
+            game(window,&LoadModel,&enigme1,&enigme2,&enigme3,&program,&font,&camera);
+            write(&font,&textProgram,VAOtext,VBOtext,font.textToPrint);
+        }
+        
         program.use();
 
         
@@ -374,7 +387,7 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
     
     enigme1->portail = glm::vec3(3.702, 12.891, -4.451);
     enigme2->portail = glm::vec3(1.119, 0.709, 6.519);
-    enigme3->portail = glm::vec3(3.702, 12.891, -4.451);
+    enigme3->portail = glm::vec3(-15.997, 0.422, -5.708);
 
     std::cout << " 1 : " << enigme1->clues[0] << " | 2 : " << enigme1->clues[1] << " | 3 : " << enigme1->clues[2] << std::endl;
     std::cout << " 1 : " << enigme2->clues[0] << " | 2 : " << enigme2->clues[1] << " | 3 : " << enigme3->clues[2] << std::endl;
@@ -423,12 +436,13 @@ void game(GLFWwindow *window,LoadModel* LoadModel,Enigme* enigme1,Enigme* enigme
         if(glm::distance(camera->Position, enigme3->portail) < 3.0) {
             enigme3->telep = true;
             font->textToPrint = "Bravo !";
+            camera->setAttributes(Position5,Front5,Up5,Right5,WorldUp5,Yaw5,Pitch5);
         } else {
             enigme3->telep = false;
         }
     }
     if(enigme1->solved && enigme1->telep && enigme2->solved && enigme2->telep && enigme3->solved && enigme3->telep){
-        enigme(window,LoadModel,enigme3,font);
+        //enigme(window,LoadModel,enigme3,font);
         LoadModel->models[6].DrawModel(*program);
     }
         
